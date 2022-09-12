@@ -1,0 +1,12 @@
+{
+  "server": [
+    {
+      "name": "Algoo Tracim",
+      "url": "https://algoo.tracim.fr/"
+    },
+    {
+      "name": "Algoo Site",
+      "url": "https://algoo.fr/"
+    }
+  ]
+}
