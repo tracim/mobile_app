@@ -1,11 +1,12 @@
 import { View, Button } from 'react-native'
+import { styles } from './styles.js'
 
 export const ServerMenu = (props) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
+    <View style={styles.pageContainer}>
       {props.serverList.map(server =>
         <View
-          style={{ marginVertical: 10, marginHorizontal: 50 }}
+          style={styles.serverMenuButton}
           key={`button_${server.name}`}
         >
           <Button
@@ -14,7 +15,7 @@ export const ServerMenu = (props) => {
           />
         </View>
       )}
-      <View style={{ height: 60, width: 50, justifyContent: 'center', alignSelf: 'center' }}>
+      <View style={styles.addNewServerButton}>
         <Button
           onPress={() => props.onPressAdd({ name: 'Preprod', url: 'https://preprod-algoo.tracim.fr/' })}
           title='+'

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { View, StatusBar, Text } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
+import { styles } from './styles.js'
 import WebView from './Webview.js'
 import ServerMenu from './ServerMenu.js'
 
@@ -17,7 +18,7 @@ export const Tracim = () => {
 
   function HomeScreen ({ navigation }) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.pageContainer}>
         <StatusBar />
 
         {serverList.length > 0
@@ -36,7 +37,7 @@ export const Tracim = () => {
 
   function WebViewScreen ({ route }) {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.pageContainer}>
         <StatusBar />
         <WebView url={route.params.url} />
       </View>
