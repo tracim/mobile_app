@@ -9,7 +9,7 @@ export const ServerMenu = (props) => {
           key={`button_${server.name}`}
         >
           <Button
-            onPress={() => props.onPressServer(server.url)}
+            onPress={() => props.onPressServer(server.name)}
             title={server.name}
           />
         </View>
