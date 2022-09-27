@@ -13,3 +13,5 @@ web-build/
 .DS_Store
 
 android/local.properties
+android/app/build/
+android/.gradle/
