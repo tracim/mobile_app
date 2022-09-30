@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { View, ScrollView, Button, Text, TextInput, SafeAreaView, Pressable } from 'react-native'
+import {
+  Button,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from './styles.js'
 
@@ -40,7 +48,7 @@ export const ServerMenu = (props) => {
     const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
     const serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
     if (serverCredentialDict && serverURL in serverCredentialDict) {
-      return {username: serverCredentialDict[serverURL].username, password: serverCredentialDict[serverURL].password}
+      return { username: serverCredentialDict[serverURL].username, password: serverCredentialDict[serverURL].password }
     } else {
       return null
     }
@@ -61,7 +69,7 @@ export const ServerMenu = (props) => {
         <TextInput
           style={[styles.input, styles.blackText]}
           onChangeText={(text) => setServerName(text)}
-          placeholder="Server name"
+          placeholder='Server name'
           placeholderTextColor={'gray'}
         />
         <Text style={[{ textAlign: 'left' }, styles.blackText]}>
@@ -69,9 +77,9 @@ export const ServerMenu = (props) => {
         </Text>
         <TextInput
           style={[styles.input, styles.blackText]}
-          keyboardType="url"
+          keyboardType='url'
           onChangeText={(text) => setServerURL(text)}
-          placeholder="Server url"
+          placeholder='Server url'
           placeholderTextColor={'gray'}
         />
         <Pressable
@@ -197,88 +205,86 @@ export const ServerMenu = (props) => {
               style={[styles.serverMenuButton]}
               key={`button_${server.name}`}
             >
-              <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Pressable
-                  style={({pressed}) => [
-                    {
-                      borderRadius: 5,
-                      padding: 10,
-                      paddingHorizontal: 15,
-                      elevation: 2
-                    }, {
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    borderRadius: 5,
+                    padding: 10,
+                    paddingHorizontal: 15,
+                    elevation: 2
+                  }, {
                     backgroundColor: pressed
                       ? "gray"
                       : "#2196F3",
-                    }
-                  ]}
-                  onPress={async () => {
-                    const credentials = await getCredentials(server.url)
-                    if (credentials) {
-                      // alert('Credentials found: ' + credentials.username + ' ' + credentials.password)
-                      fetch('https://' + server.url + '/api/auth/login', {
-                        method: 'POST',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          username: credentials.username,
-                          password: credentials.password
-                        })
-                      }).then((response) => {
-                        if (response.status === 200) {
-                          props.onPressServer(server.name)
-                        } else {
-                          alert('Wrong credentials')
-                        }
-                      }).catch((error) => {
-                        alert('Something went wrong: ' + error.message)
+                  }
+                ]}
+                onPress={async () => {
+                  const credentials = await getCredentials(server.url)
+                  if (credentials) {
+                    // alert('Credentials found: ' + credentials.username + ' ' + credentials.password)
+                    fetch('https://' + server.url + '/api/auth/login', {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        username: credentials.username,
+                        password: credentials.password
                       })
-                    } else {
-                      setCurrentServerURL(server.url)
-                      setCurrentServerName(server.name)
-                      setAddCredentialsModalVisible(true)
-                    }
-                  }}
-                  onLongPress={() => {
-                    removeCredentials(server.url)
-                    // alert('Credentials have been removed for ' + server.name)
-                  }}
-                >
-                  <Text style={[{ fontSize: 14, color: 'white' }]}>
-                    {server.name}
-                  </Text>
-                </Pressable>
-                <Pressable
-                  style={({pressed}) => [
-                    {
-                      borderRadius: 5,
-                      padding: 10,
-                      paddingHorizontal: 15,
-                      elevation: 2,
-                      alignSelf: 'flex-end' 
-                    }, {
+                    }).then((response) => {
+                      if (response.status === 200) {
+                        props.onPressServer(server.name)
+                      } else {
+                        alert('Wrong credentials')
+                      }
+                    }).catch((error) => {
+                      alert('Something went wrong: ' + error.message)
+                    })
+                  } else {
+                    setCurrentServerURL(server.url)
+                    setCurrentServerName(server.name)
+                    setAddCredentialsModalVisible(true)
+                  }
+                }}
+                onLongPress={() => {
+                  removeCredentials(server.url)
+                  // alert('Credentials have been removed for ' + server.name)
+                }}
+              >
+                <Text style={[{ fontSize: 14, color: 'white' }]}>
+                  {server.name}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    borderRadius: 5,
+                    padding: 10,
+                    paddingHorizontal: 15,
+                    elevation: 2,
+                    alignSelf: 'flex-end'
+                  }, {
                     backgroundColor: pressed
                       ? "gray"
                       : "#2196F3",
-                    }
-                  ]}
-                  onPress={() => {
-                    removeCredentials(server.url)
-                    props.onPressRemove(server)
-                  }}
-                >
-                  <Text style={[{ fontSize: 14, color: 'white' }]}>
-                    X
-                  </Text>
-                </Pressable>
-              </View>
+                  }
+                ]}
+                onPress={() => {
+                  removeCredentials(server.url)
+                  props.onPressRemove(server)
+                }}
+              >
+                <Text style={[{ fontSize: 14, color: 'white' }]}>
+                  X
+                </Text>
+              </Pressable>
             </View>
           )}
         </ScrollView>
       ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontSize: 20, color: 'gray' }}>
+        <View style={styles.errorMessageContainer}>
+          <Text style={styles.errorMessage}>
             No servers added
           </Text>
         </View>
