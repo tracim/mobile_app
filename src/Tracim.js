@@ -5,7 +5,6 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import {
   StatusBar,
-  Text,
   TouchableHighlight,
   View
 } from 'react-native'
@@ -55,7 +54,10 @@ export const Tracim = () => {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
-        <WebView url={route.params.url} />
+        <WebView
+          onClickGoBack={() => navigation.goBack()}
+          url={route.params.url}
+        />
         <TouchableHighlight
           style={styles.openServerMenuButton}
           onPress={() => navigation.openDrawer()}
@@ -69,20 +71,20 @@ export const Tracim = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        screenOptions={{ drawerPosition: 'right' }}
         initialRouteName='Home'
+        screenOptions={{ drawerPosition: 'right' }}
       >
         <Drawer.Screen
-          name='Home'
           component={HomeScreen}
+          name='Home'
           options={{ headerShown: false }}
         />
         {serverList.map(server => <Drawer.Screen
+          component={WebViewScreen}
+          initialParams={{ url: server.url }}
           key={`drawer_${server.name}`}
           name={server.name}
-          component={WebViewScreen}
           options={{ headerShown: false }}
-          initialParams={{ url: server.url }}
         />)}
       </Drawer.Navigator>
     </NavigationContainer>

@@ -61,7 +61,7 @@ export const ServerMenu = (props) => {
       <CustomModal
         modalVisible={addServerModalVisible}
         hideModal={() => setAddServerModalVisible(false)}
-        title="Add a new server"
+        title='Add a new server'
       >
         <Text style={[{ textAlign: 'left' }, styles.blackText]}>
           Server name
@@ -90,23 +90,23 @@ export const ServerMenu = (props) => {
             elevation: 2
           }, {
             backgroundColor: serverName === '' || serverURL === ''
-              ? "gray"
-              : "#2196F3",
+              ? 'gray'
+              : '#2196F3',
           }]}
           onPress={() => {
             // Either that or to ask the complete full URL
             let serverURLWithTreatments = serverURL
             // Remove the https:// if it exists
-            serverURLWithTreatments = serverURLWithTreatments.startsWith("https://")
+            serverURLWithTreatments = serverURLWithTreatments.startsWith('https://')
               ? serverURLWithTreatments.substring(8)
               : serverURLWithTreatments
             // Remove the http:// if it exists
-            serverURLWithTreatments = serverURLWithTreatments.startsWith("http://")
+            serverURLWithTreatments = serverURLWithTreatments.startsWith('http://')
               ? serverURLWithTreatments.substring(7)
               : serverURLWithTreatments
             // Remove the last / if it exists
-            serverURLWithTreatments = serverURLWithTreatments.endsWith("/")
-              ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf("/") + 1)
+            serverURLWithTreatments = serverURLWithTreatments.endsWith('/')
+              ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf('/') + 1)
               : serverURLWithTreatments
 
             props.onPressAdd({ name: serverName, url: serverURLWithTreatments })
@@ -115,9 +115,9 @@ export const ServerMenu = (props) => {
           disabled={serverName === '' || serverURL === ''}
         >
           <Text style={{
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center"
+            color: 'white',
+            fontWeight: 'bold',
+            textAlign: 'center'
           }}>Add server</Text>
         </Pressable>
       </CustomModal>
@@ -126,16 +126,16 @@ export const ServerMenu = (props) => {
       <CustomModal
         modalVisible={addCredentialsModalVisible}
         hideModal={() => setAddCredentialsModalVisible(false)}
-        title={"Add credentials for " + currentServerName}
+        title={'Add credentials for ' + currentServerName}
       >
         <Text style={[{ textAlign: 'left' }, styles.blackText]}>
           Email or username
         </Text>
         <TextInput
           style={[styles.input, styles.blackText]}
-          keyboardType="email-address"
+          keyboardType='email-address'
           onChangeText={(text) => setUsername(text)}
-          placeholder="Email or username"
+          placeholder='Email or username'
           placeholderTextColor={'gray'}
         />
         <Text style={[{ textAlign: 'left' }, styles.blackText]}>
@@ -144,7 +144,7 @@ export const ServerMenu = (props) => {
         <TextInput
           style={[styles.input, styles.blackText]}
           onChangeText={(text) => setPassword(text)}
-          placeholder="********"
+          placeholder='********'
           placeholderTextColor={'gray'}
           secureTextEntry={true}
         />
@@ -156,8 +156,8 @@ export const ServerMenu = (props) => {
             elevation: 2
           }, {
             backgroundColor: username === '' || password === ''
-              ? "gray"
-              : "#2196F3",
+              ? 'gray'
+              : '#2196F3',
           }]}
           onPress={() => {
             fetch('https://' + currentServerURL + '/api/auth/login', {
@@ -184,9 +184,9 @@ export const ServerMenu = (props) => {
           disabled={username === '' || password === ''}
         >
           <Text style={{
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center"
+            color: 'white',
+            fontWeight: 'bold',
+            textAlign: 'center'
           }}>Connect</Text>
         </Pressable>
       </CustomModal>
@@ -214,8 +214,8 @@ export const ServerMenu = (props) => {
                     elevation: 2
                   }, {
                     backgroundColor: pressed
-                      ? "gray"
-                      : "#2196F3",
+                      ? 'gray'
+                      : '#2196F3',
                   }
                 ]}
                 onPress={async () => {
@@ -266,8 +266,8 @@ export const ServerMenu = (props) => {
                     alignSelf: 'flex-end'
                   }, {
                     backgroundColor: pressed
-                      ? "gray"
-                      : "#2196F3",
+                      ? 'gray'
+                      : '#2196F3',
                   }
                 ]}
                 onPress={() => {

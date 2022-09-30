@@ -2,8 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   pageContainer: {
-    flex: 1,
-    marginTop: 15 
+    flex: 1
   },
 
   openServerMenuButton: {
