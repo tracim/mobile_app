@@ -1,5 +1,12 @@
 import { useState } from 'react'
-import { View, ScrollView, FlatList, Button, Text, TextInput, SafeAreaView } from 'react-native'
+import {
+  Button,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View
+} from 'react-native'
 import { styles } from './styles.js'
 
 export const ServerMenu = (props) => {
@@ -7,8 +14,8 @@ export const ServerMenu = (props) => {
   const [serverURL, setServerURL] = useState('')
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: 15 }}>
-      <View style={{ width: '80%', alignSelf: 'center' }}>
+    <SafeAreaView style={styles.pageContainer}>
+      <View style={styles.newServerForm}>
         <Text style={styles.blackText}>
           Add new server
         </Text>
@@ -18,7 +25,7 @@ export const ServerMenu = (props) => {
         <TextInput
           style={[styles.input, styles.blackText]}
           onChangeText={(text) => setServerName(text)}
-          placeholder="Server name"
+          placeholder='Server name'
           placeholderTextColor={'gray'}
         />
         <Text style={styles.blackText}>
@@ -26,9 +33,9 @@ export const ServerMenu = (props) => {
         </Text>
         <TextInput
           style={[styles.input, styles.blackText]}
-          keyboardType="url"
+          keyboardType='url'
           onChangeText={(text) => setServerURL(text)}
-          placeholder="Server url"
+          placeholder='Server url'
           placeholderTextColor={'gray'}
         />
         <View style={styles.addNewServerButton}>
@@ -47,23 +54,20 @@ export const ServerMenu = (props) => {
               style={[styles.serverMenuButton]}
               key={`button_${server.name}`}
             >
-              <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Button
-                  onPress={() => props.onPressServer(server.name)}
-                  title={server.name}
-                />
-                <Button
-                  style={{ alignSelf: 'flex-end' }}
-                  onPress={() => props.onPressRemove(server)}
-                  title='x'
-                />
-              </View>
+              <Button
+                onPress={() => props.onPressServer(server.name)}
+                title={server.name}
+              />
+              <Button
+                onPress={() => props.onPressRemove(server)}
+                title='x'
+              />
             </View>
           )}
         </ScrollView>
       ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontSize: 20, color: 'gray' }}>
+        <View style={styles.errorMessageContainer}>
+          <Text style={styles.errorMessage}>
             No servers added
           </Text>
         </View>

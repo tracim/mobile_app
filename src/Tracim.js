@@ -8,7 +8,7 @@ import {
   Text,
   TouchableHighlight,
   View
- } from 'react-native'
+} from 'react-native'
 import { styles } from './styles.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import WebView from './Webview.js'
@@ -55,13 +55,13 @@ export const Tracim = () => {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
+        <WebView url={route.params.url} />
         <TouchableHighlight
           style={styles.openServerMenuButton}
           onPress={() => navigation.openDrawer()}
         >
           <Icon icon={faServer} />
         </TouchableHighlight>
-        <WebView url={route.params.url} />
       </View>
     )
   }
