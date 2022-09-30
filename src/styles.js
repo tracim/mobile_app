@@ -6,6 +6,20 @@ export const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  openServerMenuButton: {
+    backgroundColor: 'lightgrey',
+    opacity: 0.5,
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    borderRadius: 50,
+    height: 40,
+    width: 40,
+    zIndex: 10,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+
   serverMenuButton: {
     marginVertical: 10,
     marginHorizontal: 50
