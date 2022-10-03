@@ -14,19 +14,19 @@ import { styles } from './styles.js'
 import { CustomModal } from './modals/CustomModal.js'
 
 export const ServerMenu = (props) => {
-  // Used to add a new server
+  // INFO - M.P. - 2022-09-30 - Used to add a new server
   const [serverName, setServerName] = useState('')
   const [serverURL, setServerURL] = useState('')
 
-  // Used to add a new credentials to a server
+  // INFO - M.P. - 2022-09-30 - Used to add a new credentials to a server
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  // Used to connect to the server
+  // INFO - M.P. - 2022-09-30 - Used to connect to the server
   const [currentServerURL, setCurrentServerURL] = useState('')
   const [currentServerName, setCurrentServerName] = useState('')
 
-  // Used to display the modals
+  // INFO - M.P. - 2022-09-30 - Used to display the modals
   const [addServerModalVisible, setAddServerModalVisible] = useState(false)
   const [addCredentialsModalVisible, setAddCredentialsModalVisible] = useState(false)
 
@@ -57,7 +57,7 @@ export const ServerMenu = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 15 }}>
 
-      {/* Modal to create a new server */}
+      {/* INFO - M.P. - 2022-09-30 - Modal to create a new server */}
       <CustomModal
         modalVisible={addServerModalVisible}
         hideModal={() => setAddServerModalVisible(false)}
@@ -94,17 +94,17 @@ export const ServerMenu = (props) => {
               : '#2196F3',
           }]}
           onPress={() => {
-            // Either that or to ask the complete full URL
+            // INFO - M.P. - 2022-09-30 - Either that or to ask the complete full URL
             let serverURLWithTreatments = serverURL
-            // Remove the https:// if it exists
+            // INFO - M.P. - 2022-09-30 - Remove the https:// if it exists
             serverURLWithTreatments = serverURLWithTreatments.startsWith('https://')
               ? serverURLWithTreatments.substring(8)
               : serverURLWithTreatments
-            // Remove the http:// if it exists
+            // INFO - M.P. - 2022-09-30 - Remove the http:// if it exists
             serverURLWithTreatments = serverURLWithTreatments.startsWith('http://')
               ? serverURLWithTreatments.substring(7)
               : serverURLWithTreatments
-            // Remove the last / if it exists
+            // INFO - M.P. - 2022-09-30 - Remove the last / if it exists
             serverURLWithTreatments = serverURLWithTreatments.endsWith('/')
               ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf('/') + 1)
               : serverURLWithTreatments
@@ -122,7 +122,7 @@ export const ServerMenu = (props) => {
         </Pressable>
       </CustomModal>
 
-      {/* Modal to update credentials */}
+      {/* INFO - M.P. - 2022-09-30 - Modal to update credentials */}
       <CustomModal
         modalVisible={addCredentialsModalVisible}
         hideModal={() => setAddCredentialsModalVisible(false)}
