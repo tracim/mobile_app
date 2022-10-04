@@ -41,7 +41,7 @@ export const ServerMenu = (props) => {
   return (
     <SafeAreaView style={styles.pageContainer}>
       <Image
-        source={require('./assets/logo.png')}
+        source={require('./branding/logo.png')}
         resizeMode='center'
         style={styles.logo}
       />
