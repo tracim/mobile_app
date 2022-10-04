@@ -12,6 +12,7 @@ import { styles } from './styles.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import WebView from './Webview.js'
 import ServerMenu from './ServerMenu.js'
+import Colors from './branding/Colors.js'
 
 export const Tracim = () => {
   const [serverList, setServerList] = useState([])
@@ -72,7 +73,11 @@ export const Tracim = () => {
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName='Home'
-        screenOptions={{ drawerPosition: 'right' }}
+        screenOptions={{
+          drawerActiveTintColor: 'white',
+          drawerActiveBackgroundColor: Colors.PRIMARY,
+          drawerPosition: 'right'
+        }}
       >
         <Drawer.Screen
           component={HomeScreen}

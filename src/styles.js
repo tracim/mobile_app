@@ -1,8 +1,32 @@
 import { StyleSheet } from 'react-native'
+import Colors from './branding/Colors.js'
 
 export const styles = StyleSheet.create({
   pageContainer: {
     flex: 1
+  },
+
+  logo: {
+    marginTop: 20,
+    height: 60,
+    width: 200,
+    alignSelf: 'center'
+  },
+
+  button: {
+    borderRadius: 5,
+    padding: 10,
+    elevation: 2,
+    backgroundColor: 'grey',
+    justifyContent: 'center'
+  },
+
+  buttonText: {
+    color: 'white'
+  },
+
+  buttonDisabled: {
+    opacity: 0.5
   },
 
   openServerMenuButton: {
@@ -20,24 +44,31 @@ export const styles = StyleSheet.create({
   },
 
   serverMenuButton: {
+    marginEnd: 20,
+    flex: 1
+  },
+
+  addNewServerButton: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+    alignItems: 'center',
+    backgroundColor: Colors.PRIMARY
+  },
+
+  serverMenuItem: {
     alignSelf: 'center',
     marginTop: 15,
-    width: '90%',
+    marginHorizontal: 20,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
 
-  addNewServerButton: {
-    height: 60,
-    width: 50,
-    justifyContent: 'center',
-    alignSelf: 'center'
-  },
-
-  newServerForm: {
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: 15
+  label: {
+    textAlign: 'left',
+    color: 'black',
+    marginBottom: 5,
+    marginTop: 10
   },
 
   input: {

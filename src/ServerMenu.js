@@ -1,46 +1,30 @@
 import { useState } from 'react'
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import {
-  Button,
-  Pressable,
+  Image,
   SafeAreaView,
   ScrollView,
   Text,
-  TextInput,
   View,
+  TouchableOpacity as Button
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from './styles.js'
-
-import { CustomModal } from './modals/CustomModal.js'
+import CreateNewServerModal from './modals/CreateNewServerModal.js'
+import UpdateCredentialsModal from './modals/UpdateCredentialsModal.js'
 
 export const ServerMenu = (props) => {
-  // INFO - M.P. - 2022-09-30 - Used to add a new server
-  const [serverName, setServerName] = useState('')
-  const [serverURL, setServerURL] = useState('')
+  const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
+  const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
 
-  // INFO - M.P. - 2022-09-30 - Used to add a new credentials to a server
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  // INFO - M.P. - 2022-09-30 - Used to connect to the server
   const [currentServerURL, setCurrentServerURL] = useState('')
   const [currentServerName, setCurrentServerName] = useState('')
-
-  // INFO - M.P. - 2022-09-30 - Used to display the modals
-  const [addServerModalVisible, setAddServerModalVisible] = useState(false)
-  const [addCredentialsModalVisible, setAddCredentialsModalVisible] = useState(false)
 
   const removeCredentials = async (serverURL) => {
     const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
     const serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
     delete serverCredentialDict[serverURL]
-    await AsyncStorage.setItem('credentials', JSON.stringify(serverCredentialDict))
-  }
-
-  const storeCredentials = async (serverURL, username, password) => {
-    const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
-    let serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
-    serverCredentialDict = { ...serverCredentialDict, [serverURL]: { username, password } }
     await AsyncStorage.setItem('credentials', JSON.stringify(serverCredentialDict))
   }
 
@@ -55,173 +39,38 @@ export const ServerMenu = (props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: 15 }}>
+    <SafeAreaView style={styles.pageContainer}>
+      <Image
+        source={require('./assets/logo.png')}
+        resizeMode='center'
+        style={styles.logo}
+      />
 
-      {/* INFO - M.P. - 2022-09-30 - Modal to create a new server */}
-      <CustomModal
-        modalVisible={addServerModalVisible}
-        hideModal={() => setAddServerModalVisible(false)}
-        title='Add a new server'
-      >
-        <Text style={[{ textAlign: 'left' }, styles.blackText]}>
-          Server name
-        </Text>
-        <TextInput
-          style={[styles.input, styles.blackText]}
-          onChangeText={(text) => setServerName(text)}
-          placeholder='Server name'
-          placeholderTextColor={'gray'}
-        />
-        <Text style={[{ textAlign: 'left' }, styles.blackText]}>
-          Server url
-        </Text>
-        <TextInput
-          style={[styles.input, styles.blackText]}
-          keyboardType='url'
-          onChangeText={(text) => setServerURL(text)}
-          placeholder='Server url'
-          placeholderTextColor={'gray'}
-        />
-        <Pressable
-          style={[{
-            borderRadius: 5,
-            marginTop: 15,
-            padding: 10,
-            elevation: 2
-          }, {
-            backgroundColor: serverName === '' || serverURL === ''
-              ? 'gray'
-              : '#2196F3',
-          }]}
-          onPress={() => {
-            // INFO - M.P. - 2022-09-30 - Either that or to ask the complete full URL
-            let serverURLWithTreatments = serverURL
-            // INFO - M.P. - 2022-09-30 - Remove the https:// if it exists
-            serverURLWithTreatments = serverURLWithTreatments.startsWith('https://')
-              ? serverURLWithTreatments.substring(8)
-              : serverURLWithTreatments
-            // INFO - M.P. - 2022-09-30 - Remove the http:// if it exists
-            serverURLWithTreatments = serverURLWithTreatments.startsWith('http://')
-              ? serverURLWithTreatments.substring(7)
-              : serverURLWithTreatments
-            // INFO - M.P. - 2022-09-30 - Remove the last / if it exists
-            serverURLWithTreatments = serverURLWithTreatments.endsWith('/')
-              ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf('/') + 1)
-              : serverURLWithTreatments
+      <CreateNewServerModal
+        modalVisible={displayCreateNewServerModal}
+        hideModal={() => setDisplayCreateNewServerModal(false)}
+        onPressAdd={props.onPressAdd}
+      />
 
-            props.onPressAdd({ name: serverName, url: serverURLWithTreatments })
-            setAddServerModalVisible(false)
-          }}
-          disabled={serverName === '' || serverURL === ''}
-        >
-          <Text style={{
-            color: 'white',
-            fontWeight: 'bold',
-            textAlign: 'center'
-          }}>Add server</Text>
-        </Pressable>
-      </CustomModal>
-
-      {/* INFO - M.P. - 2022-09-30 - Modal to update credentials */}
-      <CustomModal
-        modalVisible={addCredentialsModalVisible}
-        hideModal={() => setAddCredentialsModalVisible(false)}
-        title={'Add credentials for ' + currentServerName}
-      >
-        <Text style={[{ textAlign: 'left' }, styles.blackText]}>
-          Email or username
-        </Text>
-        <TextInput
-          style={[styles.input, styles.blackText]}
-          keyboardType='email-address'
-          onChangeText={(text) => setUsername(text)}
-          placeholder='Email or username'
-          placeholderTextColor={'gray'}
-        />
-        <Text style={[{ textAlign: 'left' }, styles.blackText]}>
-          Password
-        </Text>
-        <TextInput
-          style={[styles.input, styles.blackText]}
-          onChangeText={(text) => setPassword(text)}
-          placeholder='********'
-          placeholderTextColor={'gray'}
-          secureTextEntry={true}
-        />
-        <Pressable
-          style={[{
-            borderRadius: 5,
-            marginTop: 15,
-            padding: 10,
-            elevation: 2
-          }, {
-            backgroundColor: username === '' || password === ''
-              ? 'gray'
-              : '#2196F3',
-          }]}
-          onPress={() => {
-            fetch('https://' + currentServerURL + '/api/auth/login', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                username: username,
-                password: password
-              })
-            }).then((response) => {
-              if (response.status === 200) {
-                setAddCredentialsModalVisible(false)
-                storeCredentials(currentServerURL, username, password)
-              } else {
-                alert('Wrong credentials, can\'t save it')
-              }
-            }).catch((error) => {
-              alert('Something went wrong: ' + error.message)
-            })
-          }}
-          disabled={username === '' || password === ''}
-        >
-          <Text style={{
-            color: 'white',
-            fontWeight: 'bold',
-            textAlign: 'center'
-          }}>Connect</Text>
-        </Pressable>
-      </CustomModal>
-
-      <View style={{ marginStart: 15, marginEnd: 15 }}>
-        <Button
-          onPress={() => setAddServerModalVisible(true)}
-          title='Add a server'
-        />
-      </View>
+      <UpdateCredentialsModal
+        modalVisible={displayUpdateCredentialsModal}
+        hideModal={() => setDisplayUpdateCredentialsModal(false)}
+        currentServerURL={currentServerURL}
+        currentServerName={currentServerName}
+      />
 
       {props.serverList.length > 0 ? (
         <ScrollView>
           {props.serverList.map(server =>
             <View
-              style={[styles.serverMenuButton]}
+              style={styles.serverMenuItem}
               key={`button_${server.name}`}
             >
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    borderRadius: 5,
-                    padding: 10,
-                    paddingHorizontal: 15,
-                    elevation: 2
-                  }, {
-                    backgroundColor: pressed
-                      ? 'gray'
-                      : '#2196F3',
-                  }
-                ]}
+              <Button
+                style={[styles.button, styles.serverMenuButton]}
                 onPress={async () => {
                   const credentials = await getCredentials(server.url)
                   if (credentials) {
-                    // alert('Credentials found: ' + credentials.username + ' ' + credentials.password)
                     fetch('https://' + server.url + '/api/auth/login', {
                       method: 'POST',
                       headers: {
@@ -244,41 +93,26 @@ export const ServerMenu = (props) => {
                   } else {
                     setCurrentServerURL(server.url)
                     setCurrentServerName(server.name)
-                    setAddCredentialsModalVisible(true)
+                    setDisplayUpdateCredentialsModal(true)
                   }
                 }}
                 onLongPress={() => {
                   removeCredentials(server.url)
-                  // alert('Credentials have been removed for ' + server.name)
                 }}
               >
-                <Text style={[{ fontSize: 14, color: 'white' }]}>
+                <Text style={styles.buttonText}>
                   {server.name}
                 </Text>
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    borderRadius: 5,
-                    padding: 10,
-                    paddingHorizontal: 15,
-                    elevation: 2,
-                    alignSelf: 'flex-end'
-                  }, {
-                    backgroundColor: pressed
-                      ? 'gray'
-                      : '#2196F3',
-                  }
-                ]}
+              </Button>
+              <Button
+                style={styles.button}
                 onPress={() => {
                   removeCredentials(server.url)
                   props.onPressRemove(server)
                 }}
               >
-                <Text style={[{ fontSize: 14, color: 'white' }]}>
-                  X
-                </Text>
-              </Pressable>
+                <Icon icon={faTimes} style={styles.buttonText} />
+              </Button>
             </View>
           )}
         </ScrollView>
@@ -289,6 +123,15 @@ export const ServerMenu = (props) => {
           </Text>
         </View>
       )}
+
+      <Button
+        onPress={() => setDisplayCreateNewServerModal(true)}
+        style={[styles.button, styles.addNewServerButton]}
+      >
+        <Text style={styles.buttonText}>
+          ADD A NEW SERVER
+        </Text>
+      </Button>
     </SafeAreaView>
   )
 }

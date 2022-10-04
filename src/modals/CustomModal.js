@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { View, Modal, Text, Pressable } from 'react-native'
-import { styles } from '../styles.js'
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { modalStyles } from './modalStyles.js'
 
 export const CustomModal = (props) => {
   const [modalVisible, setModalVisible] = useState(props.modalVisible)
@@ -11,41 +13,20 @@ export const CustomModal = (props) => {
 
   return (
     <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
+      animationType='fade'
       onRequestClose={props.hideModal}
+      transparent
+      visible={modalVisible}
     >
-      <View style={{
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        justifyContent: "center",
-      }}>
-        <View style={{
-          margin: 10,
-          backgroundColor: "white",
-          borderRadius: 5,
-          padding: 15,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 4,
-          elevation: 5
-        }}>
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginBottom: 10 }}>
-            <Text style={[{ textAlign: 'left', fontSize: 18 }, styles.blackText]}>
+      <View style={modalStyles.container}>
+        <View style={modalStyles.modal}>
+          <View style={modalStyles.header}>
+            <Text style={modalStyles.title}>
               {props.title}
             </Text>
 
-            <Pressable
-              onPress={props.hideModal}
-            >
-              <Text style={[{ fontSize: 16 }, styles.blackText]}>
-                X
-              </Text>
+            <Pressable onPress={props.hideModal}>
+              <Icon icon={faTimes} />
             </Pressable>
           </View>
           {props.children}
