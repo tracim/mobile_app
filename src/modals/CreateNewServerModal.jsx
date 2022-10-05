@@ -4,7 +4,7 @@ import {
   TextInput,
   TouchableOpacity as Button
 } from 'react-native'
-import { CustomModal } from './CustomModal.js'
+import { CustomModal } from './CustomModal.jsx'
 import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
 
@@ -16,6 +16,7 @@ export const CreateNewServerModal = (props) => {
     <CustomModal
       modalVisible={props.modalVisible}
       hideModal={props.hideModal}
+      showCloseButton={props.showCloseButton}
       title='Add a new server'
     >
       <Text style={styles.label}>

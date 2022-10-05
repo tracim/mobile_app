@@ -8,18 +8,26 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
+import {
+  COLORS,
+  IS_SINGLE_SERVER,
+  SERVER_NAME,
+  SERVER_URL
+} from './branding/Config.js'
 import { styles } from './styles.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import WebView from './Webview.js'
-import ServerMenu from './ServerMenu.js'
-import Colors from './branding/Colors.js'
+import WebView from './Webview.jsx'
+import MultipleServerMenu from './MultipleServerMenu.jsx'
+import SingleServerMenu from './SingleServerMenu.jsx'
 
 export const Tracim = () => {
   const [serverList, setServerList] = useState([])
   const Drawer = createDrawerNavigator()
 
   useEffect(() => {
-    getServerList()
+    if (IS_SINGLE_SERVER) {
+      setServerList([{ url: SERVER_URL, name: SERVER_NAME }])
+    } else getServerList()
   }, [])
 
   useEffect(() => {
@@ -41,12 +49,19 @@ export const Tracim = () => {
       <View style={styles.pageContainer}>
         <StatusBar />
 
-        <ServerMenu
-          serverList={serverList}
-          onPressServer={navigation.navigate}
-          onPressAdd={(server) => setServerList([...serverList, server])}
-          onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
-        />
+        {IS_SINGLE_SERVER
+          ? (
+            <SingleServerMenu
+              onPressServer={navigation.navigate}
+            />
+          ) : (
+            <MultipleServerMenu
+              serverList={serverList}
+              onPressServer={navigation.navigate}
+              onPressAdd={(server) => setServerList([...serverList, server])}
+              onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
+            />
+          )}
       </View>
     )
   }
@@ -59,12 +74,14 @@ export const Tracim = () => {
           onClickGoBack={() => navigation.goBack()}
           url={route.params.url}
         />
-        <TouchableHighlight
-          style={styles.openServerMenuButton}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Icon icon={faServer} />
-        </TouchableHighlight>
+        {!IS_SINGLE_SERVER && (
+          <TouchableHighlight
+            style={styles.openServerMenuButton}
+            onPress={() => navigation.openDrawer()}
+          >
+            <Icon icon={faServer} />
+          </TouchableHighlight>
+        )}
       </View>
     )
   }
@@ -75,21 +92,27 @@ export const Tracim = () => {
         initialRouteName='Home'
         screenOptions={{
           drawerActiveTintColor: 'white',
-          drawerActiveBackgroundColor: Colors.PRIMARY,
+          drawerActiveBackgroundColor: COLORS.PRIMARY,
           drawerPosition: 'right'
         }}
       >
         <Drawer.Screen
           component={HomeScreen}
           name='Home'
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            swipeEnabled: !IS_SINGLE_SERVER
+          }}
         />
         {serverList.map(server => <Drawer.Screen
           component={WebViewScreen}
           initialParams={{ url: server.url }}
           key={`drawer_${server.name}`}
           name={server.name}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            swipeEnabled: !IS_SINGLE_SERVER
+          }}
         />)}
       </Drawer.Navigator>
     </NavigationContainer>

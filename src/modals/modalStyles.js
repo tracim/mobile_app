@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import Colors from '../branding/Colors'
+import { COLORS } from '../branding/Config.js'
 
 export const modalStyles = StyleSheet.create({
   container: {
@@ -37,7 +37,7 @@ export const modalStyles = StyleSheet.create({
 
   callToActionButton: {
     marginTop: 20,
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: COLORS.PRIMARY,
     alignItems: 'center'
   }
 })

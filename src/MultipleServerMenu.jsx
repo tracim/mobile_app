@@ -9,34 +9,21 @@ import {
   View,
   TouchableOpacity as Button
 } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  fetchCredentials,
+  getCredentials,
+  removeCredentials
+} from './authentificationHelper.js'
 import { styles } from './styles.js'
-import CreateNewServerModal from './modals/CreateNewServerModal.js'
-import UpdateCredentialsModal from './modals/UpdateCredentialsModal.js'
+import CreateNewServerModal from './modals/CreateNewServerModal.jsx'
+import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 
-export const ServerMenu = (props) => {
+export const MultipleServerMenu = (props) => {
   const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
 
   const [currentServerURL, setCurrentServerURL] = useState('')
   const [currentServerName, setCurrentServerName] = useState('')
-
-  const removeCredentials = async (serverURL) => {
-    const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
-    const serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
-    delete serverCredentialDict[serverURL]
-    await AsyncStorage.setItem('credentials', JSON.stringify(serverCredentialDict))
-  }
-
-  const getCredentials = async (serverURL) => {
-    const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
-    const serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
-    if (serverCredentialDict && serverURL in serverCredentialDict) {
-      return { username: serverCredentialDict[serverURL].username, password: serverCredentialDict[serverURL].password }
-    } else {
-      return null
-    }
-  }
 
   return (
     <SafeAreaView style={styles.pageContainer}>
@@ -50,6 +37,7 @@ export const ServerMenu = (props) => {
         modalVisible={displayCreateNewServerModal}
         hideModal={() => setDisplayCreateNewServerModal(false)}
         onPressAdd={props.onPressAdd}
+        showCloseButton
       />
 
       <UpdateCredentialsModal
@@ -57,6 +45,7 @@ export const ServerMenu = (props) => {
         hideModal={() => setDisplayUpdateCredentialsModal(false)}
         currentServerURL={currentServerURL}
         currentServerName={currentServerName}
+        showCloseButton
       />
 
       {props.serverList.length > 0 ? (
@@ -71,25 +60,11 @@ export const ServerMenu = (props) => {
                 onPress={async () => {
                   const credentials = await getCredentials(server.url)
                   if (credentials) {
-                    fetch('https://' + server.url + '/api/auth/login', {
-                      method: 'POST',
-                      headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        username: credentials.username,
-                        password: credentials.password
-                      })
-                    }).then((response) => {
-                      if (response.status === 200) {
-                        props.onPressServer(server.name)
-                      } else {
-                        alert('Wrong credentials')
-                      }
-                    }).catch((error) => {
-                      alert('Something went wrong: ' + error.message)
-                    })
+                    fetchCredentials(
+                      server.url,
+                      credentials,
+                      () => props.onPressServer(server.name)
+                    )
                   } else {
                     setCurrentServerURL(server.url)
                     setCurrentServerName(server.name)
@@ -135,4 +110,4 @@ export const ServerMenu = (props) => {
     </SafeAreaView>
   )
 }
-export default ServerMenu
+export default MultipleServerMenu

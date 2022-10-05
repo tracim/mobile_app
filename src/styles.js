@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import Colors from './branding/Colors.js'
+import { COLORS } from './branding/Config.js'
 
 export const styles = StyleSheet.create({
   pageContainer: {
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
     alignItems: 'center',
-    backgroundColor: Colors.PRIMARY
+    backgroundColor: COLORS.PRIMARY
   },
 
   serverMenuItem: {
