@@ -72,6 +72,7 @@ export const Tracim = () => {
         <StatusBar />
         <WebView
           onClickGoBack={() => navigation.goBack()}
+          screenId={route.params.screenId}
           url={route.params.url}
         />
         {!IS_SINGLE_SERVER && (

@@ -18,10 +18,14 @@ export const Webview = (props) => {
   // The mechanism works for the page scroll as a whole, but not for a scroll on a very internal div.
   const [refresherEnabled, setEnableRefresher] = useState(false)
   const [canGoBack, setCanGoBack] = useState(false)
-  const webViewRef = useRef()
+  const [url, setUrl] = useState('')
   const [isRefLoaded, setIsRefLoaded] = useState(false)
+  const webViewRef = useRef()
 
   useEffect(() => {
+    if (props.screenId) setUrl(`https://${props.url}/ui/${props.screenId}`)
+    else setUrl(`https://${props.url}`)
+
     setIsRefLoaded(true)
   }, [])
 
@@ -60,7 +64,7 @@ export const Webview = (props) => {
         onNavigationStateChange={handleNavigationStateChange}
         onScroll={handleScroll}
         ref={webViewRef}
-        source={{ uri: `https://${props.url}` }}
+        source={{ uri: url }}
         startInLoadingState
         renderLoading={() => (
           <View style={styles.pageContainer}>

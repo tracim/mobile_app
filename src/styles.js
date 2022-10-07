@@ -71,6 +71,11 @@ export const styles = StyleSheet.create({
     marginTop: 10
   },
 
+  link: {
+    textAlign: 'right',
+    paddingTop: 10
+  },
+
   input: {
     borderColor: 'gray',
     width: '100%',

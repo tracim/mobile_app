@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from '@react-navigation/native'
 import {
   Text,
   TextInput,
@@ -39,6 +40,17 @@ export const UpdateCredentialsModal = (props) => {
         placeholder='********'
         secureTextEntry
       />
+
+      <Link
+        to={{
+          screen: props.currentServerName,
+          params: { screenId: 'forgot-password' }
+        }}
+        onPress={props.hideModal}
+        style={styles.link}
+      >
+        Forgot password
+      </Link>
 
       <Button
         style={username === '' || password === ''
