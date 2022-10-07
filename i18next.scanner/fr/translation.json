@@ -1,0 +1,16 @@
+{
+  "Add a new server": "Ajouter un nouveau serveur",
+  "ADD A NEW SERVER": "AJOUTER UN NOUVEAU SERVEUR",
+  "Add credentials for {{currentServerName}}": "Ajouter des informations d'identification pour {{currentServerName}}",
+  "Add server": "Ajouter le serveur",
+  "Connect": "Connecter",
+  "Email or username": "Email ou identifiant",
+  "Forgot password": "Mot de passe oublié",
+  "Home": "Accueil",
+  "No servers added": "Aucun serveur ajouté",
+  "Password": "Mot de passe",
+  "Server name": "Nom du serveur",
+  "Server URL": "URL du serveur",
+  "Something went wrong: ": "Quelque chose s'est mal passé : ",
+  "Wrong credentials": "Informations d'identification erronées"
+}

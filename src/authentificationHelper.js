@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import i18n from '../i18next.scanner/i18n.js'
 
 export const getCredentials = async (serverURL) => {
   const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
@@ -39,9 +40,9 @@ export const fetchCredentials = async (serverURL, credentials, callbackFunction)
     if (response.status === 200) {
       callbackFunction()
     } else {
-      alert('Wrong credentials')
+      alert(i18n.t('Wrong credentials'))
     }
   }).catch((error) => {
-    alert('Something went wrong: ' + error.message)
+    alert(i18n.t('Something went wrong: ') + error.message)
   })
 }

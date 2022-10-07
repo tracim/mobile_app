@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { useTranslation } from 'react-i18next'
 import {
   Image,
   SafeAreaView,
@@ -19,6 +20,7 @@ import CreateNewServerModal from './modals/CreateNewServerModal.jsx'
 import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 
 export const MultipleServerMenu = (props) => {
+  const { t } = useTranslation()
   const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
 
@@ -94,7 +96,7 @@ export const MultipleServerMenu = (props) => {
       ) : (
         <View style={styles.errorMessageContainer}>
           <Text style={styles.errorMessage}>
-            No servers added
+            {t('No servers added')}
           </Text>
         </View>
       )}
@@ -104,7 +106,7 @@ export const MultipleServerMenu = (props) => {
         style={[styles.button, styles.addNewServerButton]}
       >
         <Text style={styles.buttonText}>
-          ADD A NEW SERVER
+          {t('ADD A NEW SERVER')}
         </Text>
       </Button>
     </SafeAreaView>

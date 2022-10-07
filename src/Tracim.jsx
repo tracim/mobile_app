@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
+import { useTranslation } from 'react-i18next'
 import {
   StatusBar,
   TouchableHighlight,
@@ -21,8 +22,10 @@ import MultipleServerMenu from './MultipleServerMenu.jsx'
 import SingleServerMenu from './SingleServerMenu.jsx'
 
 export const Tracim = () => {
-  const [serverList, setServerList] = useState([])
+  const { t } = useTranslation()
   const Drawer = createDrawerNavigator()
+
+  const [serverList, setServerList] = useState([])
 
   useEffect(() => {
     if (IS_SINGLE_SERVER) {
@@ -90,7 +93,7 @@ export const Tracim = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName='Home'
+        initialRouteName={t('Home')}
         screenOptions={{
           drawerActiveTintColor: 'white',
           drawerActiveBackgroundColor: COLORS.PRIMARY,
@@ -99,7 +102,7 @@ export const Tracim = () => {
       >
         <Drawer.Screen
           component={HomeScreen}
-          name='Home'
+          name={t('Home')}
           options={{
             headerShown: false,
             swipeEnabled: !IS_SINGLE_SERVER

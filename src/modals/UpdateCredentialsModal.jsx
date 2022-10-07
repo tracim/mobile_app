@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 import {
   Text,
   TextInput,
@@ -11,6 +12,7 @@ import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
 
 export const UpdateCredentialsModal = (props) => {
+  const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -19,20 +21,22 @@ export const UpdateCredentialsModal = (props) => {
       modalVisible={props.modalVisible}
       hideModal={props.hideModal}
       showCloseButton={props.showCloseButton}
-      title={'Add credentials for ' + props.currentServerName}
+      title={t('Add credentials for {{currentServerName}}', {
+        currentServerName: props.currentServerName
+      })}
     >
       <Text style={styles.label}>
-        Email or username
+        {t('Email or username')}
       </Text>
       <TextInput
         style={[styles.input, styles.blackText]}
         keyboardType='email-address'
         onChangeText={setUsername}
-        placeholder='Email or username'
+        placeholder={t('Email or username')}
       />
 
       <Text style={styles.label}>
-        Password
+        {t('Password')}
       </Text>
       <TextInput
         style={[styles.input, styles.blackText]}
@@ -49,7 +53,7 @@ export const UpdateCredentialsModal = (props) => {
         onPress={props.hideModal}
         style={styles.link}
       >
-        Forgot password
+        {t('Forgot password')}
       </Link>
 
       <Button
@@ -69,7 +73,7 @@ export const UpdateCredentialsModal = (props) => {
         }}
         disabled={username === '' || password === ''}
       >
-        <Text style={styles.buttonText}>Connect</Text>
+        <Text style={styles.buttonText}>{t('Connect')}</Text>
       </Button>
     </CustomModal>
   )

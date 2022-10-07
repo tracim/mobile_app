@@ -14,8 +14,6 @@ import { WebView } from 'react-native-webview'
 import { styles } from './styles.js'
 
 export const Webview = (props) => {
-  // FIXME - G.B. - 2022-09-30 - The refresh is disabled until the problem is fixed in Tracim.
-  // The mechanism works for the page scroll as a whole, but not for a scroll on a very internal div.
   const [refresherEnabled, setEnableRefresher] = useState(false)
   const [canGoBack, setCanGoBack] = useState(false)
   const [url, setUrl] = useState('')
@@ -46,7 +44,9 @@ export const Webview = (props) => {
 
   const handleScroll = (e) => {
     const isTopOfPage = Number(e.nativeEvent.contentOffset.y) === 0
-    setEnableRefresher(isTopOfPage)
+    // FIXME - G.B. - 2022-09-30 - The refresh is disabled until the problem is fixed in Tracim.
+    // The mechanism works for the page scroll as a whole, but not for a scroll on a very internal div.
+    //setEnableRefresher(isTopOfPage)
   }
 
   return (
