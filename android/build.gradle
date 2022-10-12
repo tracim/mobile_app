@@ -28,6 +28,11 @@ buildscript {
     }
 }
 
+// DOCUMENTATION https://github.com/invertase/react-native-gradle-plugin
+plugins {
+  id("io.invertase.gradle.build") version "1.3"
+}
+
 allprojects {
     repositories {
         maven {
