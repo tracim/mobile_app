@@ -43,7 +43,7 @@ export const Tracim = () => {
 
   const getServerList = async () => {
     const serverListAsJSON = await AsyncStorage.getItem('serverList')
-    const serverList = JSON.parse(serverListAsJSON)
+    const serverList = JSON.parse(serverListAsJSON) || []
     setServerList(serverList)
   }
 

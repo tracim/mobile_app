@@ -28,10 +28,15 @@ buildscript {
     }
 }
 
-// DOCUMENTATION https://github.com/invertase/react-native-gradle-plugin
-plugins {
-  id("io.invertase.gradle.build") version "1.3"
-}
+/*
+    INFO - G.B. - 2022-10-13 - Initially this setting was added to be able to generate the
+    keystore (see commit https://github.com/tracim/mobile_app/commit/7d57c7285b21d5856e2d12ac2d5d567541fbe02e
+    and documentation https://github.com/invertase/react-native-gradle-plugin) but it had to be removed in
+    order to generate the app bundle.
+*/
+// plugins {
+//   id("io.invertase.gradle.build") version "1.3"
+// }
 
 allprojects {
     repositories {
