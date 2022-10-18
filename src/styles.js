@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     opacity: 0.5,
     position: 'absolute',
-    bottom: 5,
+    bottom: 35,
     left: 10,
     borderRadius: 50,
     height: 40,

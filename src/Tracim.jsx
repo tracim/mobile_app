@@ -5,6 +5,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import { useTranslation } from 'react-i18next'
 import {
+  SafeAreaView,
   StatusBar,
   TouchableHighlight,
   View
@@ -47,7 +48,7 @@ export const Tracim = () => {
     setServerList(serverList)
   }
 
-  function HomeScreen ({ navigation }) {
+  function HomeScreen({ navigation }) {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
@@ -69,15 +70,17 @@ export const Tracim = () => {
     )
   }
 
-  function WebViewScreen ({ route, navigation }) {
+  function WebViewScreen({ route, navigation }) {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
-        <WebView
-          onClickGoBack={() => navigation.goBack()}
-          screenId={route.params.screenId}
-          url={route.params.url}
-        />
+        <SafeAreaView style={styles.pageContainer}>
+          <WebView
+            onClickGoBack={() => navigation.goBack()}
+            screenId={route.params.screenId}
+            url={route.params.url}
+          />
+        </SafeAreaView>
         {!IS_SINGLE_SERVER && (
           <TouchableHighlight
             style={styles.openServerMenuButton}
