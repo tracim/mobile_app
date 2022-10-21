@@ -67,12 +67,16 @@ export const Webview = (props) => {
         fetchCredentials(
           props.url,
           credentials,
-          () => setScreenId('recent-activities')
+          () => {
+            setScreenId('recent-activities')
+            webViewRef.current.reload()
+          }
         )
       }
     }
     if (actionMadeOnTracim === 'logout') {
       removeCredentials(props.url)
+      props.onClickGoBack()
     }
   }
 
@@ -89,6 +93,8 @@ export const Webview = (props) => {
     >
       <WebView
         onNavigationStateChange={handleNavigationStateChange}
+        pullToRefreshEnabled
+        sharedCookiesEnabled
         onScroll={handleScroll}
         ref={webViewRef}
         source={{ uri: httpsUrl }}

@@ -38,7 +38,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-
+	
 #if RCT_DEV
   [bridge moduleForClass:[RCTDevLoadingView class]];
 #endif
