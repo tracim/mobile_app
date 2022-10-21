@@ -11,8 +11,12 @@ import {
   ScrollView,
   View
 } from 'react-native'
+import {
+  getCredentials,
+  fetchCredentials,
+  removeCredentials
+} from './authentificationHelper.js'
 import { WebView } from 'react-native-webview'
-import { getCredentials, removeCredentials } from './authentificationHelper.js'
 import { styles } from './styles.js'
 
 export const Webview = (props) => {
@@ -60,7 +64,11 @@ export const Webview = (props) => {
     if (e.nativeEvent.data === 'login') {
       const credentials = await getCredentials(props.url)
       if (credentials) {
-        setScreenId('recent-activities')
+        fetchCredentials(
+          props.url,
+          credentials,
+          () => setScreenId('recent-activities')
+        )
       }
     }
     if (e.nativeEvent.data === 'logout') {
