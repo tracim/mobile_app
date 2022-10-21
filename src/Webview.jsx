@@ -60,8 +60,8 @@ export const Webview = (props) => {
     // setEnableRefresher(isTopOfPage)
   }
 
-  const handleMessageReceived = async (e) => {
-    if (e.nativeEvent.data === 'login') {
+  const handleMessageReceived = async (actionMadeOnTracim) => {
+    if (actionMadeOnTracim === 'login') {
       const credentials = await getCredentials(props.url)
       if (credentials) {
         fetchCredentials(
@@ -71,7 +71,7 @@ export const Webview = (props) => {
         )
       }
     }
-    if (e.nativeEvent.data === 'logout') {
+    if (actionMadeOnTracim === 'logout') {
       removeCredentials(props.url)
     }
   }
@@ -98,7 +98,7 @@ export const Webview = (props) => {
             <ActivityIndicator size='large' />
           </View>
         )}
-        onMessage={handleMessageReceived}
+        onMessage={(e) => handleMessageReceived(e.nativeEvent.data)}
       />
     </ScrollView>
   )
