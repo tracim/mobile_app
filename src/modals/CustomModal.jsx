@@ -4,9 +4,11 @@ import PropTypes from 'prop-types'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { modalStyles } from './modalStyles.js'
+import { useTranslation } from 'react-i18next'
 
 export const CustomModal = (props) => {
   const [modalVisible, setModalVisible] = useState(props.modalVisible)
+  const { t } = useTranslation()
 
   useEffect(() => {
     setModalVisible(props.modalVisible)
@@ -26,7 +28,11 @@ export const CustomModal = (props) => {
               {props.title}
             </Text>
             {props.showCloseButton && (
-              <Pressable onPress={props.hideModal}>
+              <Pressable
+                accessibilityLabel={t('Close')}
+                onPress={props.hideModal}
+                style={modalStyles.closeButton}
+              >
                 <Icon icon={faTimes} />
               </Pressable>
             )}

@@ -38,6 +38,12 @@ export const modalStyles = StyleSheet.create({
   callToActionButton: {
     marginTop: 20,
     backgroundColor: COLORS.PRIMARY,
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 48
+  },
+
+  closeButton: {
+    height: 48,
+    width: 48
   }
 })

@@ -21,23 +21,23 @@ export const CreateNewServerModal = (props) => {
       showCloseButton={props.showCloseButton}
       title={t('Add a new server')}
     >
-      <Text style={styles.label}>
+      <Text style={styles.label} accessibilityElementsHidden importantForAccessibility='no-hide-descendants'>
         {t('Server name')}
       </Text>
       <TextInput
-        style={[styles.input, styles.blackText]}
         onChangeText={setServerName}
         placeholder={t('Server name')}
+        style={[styles.input, styles.blackText]}
       />
 
-      <Text style={styles.label}>
+      <Text style={styles.label} accessibilityElementsHidden importantForAccessibility='no-hide-descendants'>
         {t('Server URL')}
       </Text>
       <TextInput
-        style={[styles.input, styles.blackText]}
         keyboardType='url'
         onChangeText={setServerURL}
         placeholder={t('Server URL')}
+        style={[styles.input, styles.blackText]}
       />
 
       <Button

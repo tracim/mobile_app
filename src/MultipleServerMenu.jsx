@@ -88,7 +88,11 @@ export const MultipleServerMenu = (props) => {
                   props.onPressRemove(server)
                 }}
               >
-                <Icon icon={faTimes} style={styles.buttonText} />
+                <Icon
+                  accessibilityLabel={t('Remove {{serverName}}', { serverName: server.name })}
+                  icon={faTimes}
+                  style={styles.buttonText}
+                />
               </Button>
             </View>
           )}

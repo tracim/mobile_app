@@ -18,6 +18,7 @@ import {
 } from './branding/Config.js'
 import { styles } from './styles.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SplashScreen from  'react-native-splash-screen'
 import WebView from './Webview.jsx'
 import MultipleServerMenu from './MultipleServerMenu.jsx'
 import SingleServerMenu from './SingleServerMenu.jsx'
@@ -29,6 +30,7 @@ export const Tracim = () => {
   const [serverList, setServerList] = useState([])
 
   useEffect(() => {
+    SplashScreen.hide()
     if (IS_SINGLE_SERVER) {
       setServerList([{ url: SERVER_URL, name: SERVER_NAME }])
     } else getServerList()

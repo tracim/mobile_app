@@ -18,7 +18,9 @@ export const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     backgroundColor: 'grey',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 48,
+    minWidth: 48
   },
 
   buttonText: {
