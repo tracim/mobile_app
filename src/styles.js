@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'grey',
     justifyContent: 'center',
     height: 48,
-    minWidth: 48
+    minWidth: 48,
+    alignItems: 'center'
   },
 
   buttonText: {
@@ -47,7 +48,8 @@ export const styles = StyleSheet.create({
 
   serverMenuButton: {
     marginEnd: 20,
-    flex: 1
+    flex: 1,
+    alignItems: 'flex-start'
   },
 
   addNewServerButton: {

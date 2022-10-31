@@ -31,7 +31,7 @@ export const MultipleServerMenu = (props) => {
     <SafeAreaView style={styles.pageContainer}>
       <Image
         source={require('./branding/logo.png')}
-        resizeMode='center'
+        resizeMode='contain'
         style={styles.logo}
       />
 
