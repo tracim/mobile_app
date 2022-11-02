@@ -52,7 +52,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
 
   NSDictionary *initProps = [self prepareInitialProps];
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"mobile_app", initProps);
+  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"tracim_mobile_app", initProps);
 
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
