@@ -9,7 +9,7 @@ import {
 import { CustomModal } from './CustomModal.jsx'
 import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
-import BouncyCheckbox from "react-native-bouncy-checkbox"
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 export const AcceptTermsOfUseModal = (props) => {
   const { t } = useTranslation()
@@ -38,12 +38,7 @@ export const AcceptTermsOfUseModal = (props) => {
 
       <BouncyCheckbox
         size={25}
-        fillColor="red"
-        unfillColor="#FFFFFF"
-        text="I've read and accept the terms of use"
-        iconStyle={{ borderColor: "red" }}
-        innerIconStyle={{ borderWidth: 2 }}
-        textStyle={{ fontFamily: "JosefinSans-Regular" }}
+        text={t('I\'ve read and accept the terms of use')}
         onPress={setAccepted}
       />
 

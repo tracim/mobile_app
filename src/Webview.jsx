@@ -13,7 +13,7 @@ import {
 } from 'react-native'
 import {
   getCredentials,
-  fetchCredentials,
+  postLogin,
   removeCredentials
 } from './authentificationHelper.js'
 import { WebView } from 'react-native-webview'
@@ -64,14 +64,9 @@ export const Webview = (props) => {
     if (actionMadeOnTracim === 'login') {
       const credentials = await getCredentials(props.url)
       if (credentials) {
-        fetchCredentials(
-          props.url,
-          credentials,
-          () => {
-            setScreenId('recent-activities')
-            webViewRef.current.reload()
-          }
-        )
+        await postLogin(props.url, credentials)
+        setScreenId('recent-activities')
+        webViewRef.current.reload()
       }
     }
     if (actionMadeOnTracim === 'logout') {

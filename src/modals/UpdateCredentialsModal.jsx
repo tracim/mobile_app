@@ -7,7 +7,7 @@ import {
   TouchableOpacity as Button
 } from 'react-native'
 import { CustomModal } from './CustomModal.jsx'
-import { fetchCredentials, storeCredentials } from '../authentificationHelper.js'
+import { postLogin, storeCredentials } from '../authentificationHelper.js'
 import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
 
@@ -61,15 +61,10 @@ export const UpdateCredentialsModal = (props) => {
           ? [styles.button, styles.buttonDisabled, modalStyles.callToActionButton]
           : [styles.button, modalStyles.callToActionButton]
         }
-        onPress={() => {
-          fetchCredentials(
-            props.currentServerURL,
-            { username, password },
-            () => {
-              props.hideModal()
-              storeCredentials(props.currentServerURL, username, password)
-            }
-          )
+        onPress={async () => {
+          await postLogin(props.currentServerURL,{ username, password })
+	  await storeCredentials(props.currentServerURL, username, password)
+          props.hideModal()
         }}
         disabled={username === '' || password === ''}
       >

@@ -43,13 +43,12 @@ export const removeCredentials = async (serverURL) => {
 
 /**
  * Try to connect to the server with the given credentials.
- * If the connection is successful, the callback function is triggered.
- * Otherwise, an error message is displayed.
+ * An error message is displayed in case of login failure.
  * @param {String} serverURL URL of the server
  * @param {String} credentials Credential to use for the connection
- * @param {Function} callbackFunction The function to call if the connection is successful
+ * @return {Object} Object representing the user of null if login failed
  */
-export const fetchCredentials = async (serverURL, credentials, callbackFunction) => {
+export const postLogin = async (serverURL, credentials) => {
   try {
     const response = await fetch(`https://${serverURL}/api/auth/login`, {
       method: 'POST',
@@ -57,48 +56,17 @@ export const fetchCredentials = async (serverURL, credentials, callbackFunction)
 	Accept: 'application/json',
 	'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-	username: credentials.username,
-	password: credentials.password
-      })
+      body: JSON.stringify(credentials)
     })
     if (response.status === 200) {
-      await callbackFunction(await response.json())
+      return await response.json()
     } else {
       alert(i18n.t('Wrong credentials'))
     }
   } catch(error) {
     alert(i18n.t('Something went wrong: ') + error.message)
   }
-}
-
-/**
- * Get the ID of the current user of a specific server using cache
- * @param {String} serverURL URL of the server
- * @returns The id of the connected user
- */
-export const getCurrentUserID = async (serverURL) => {
-  let userId = -1
-
-  fetch(`https://${serverURL}/api/whoami`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
-    if (response.status === 200) {
-      userId = response.json().user_id
-    } else if (response.stats === 401) {
-      alert(i18n.t('User not logged in'))
-    } else {
-      alert(i18n.t('Something went wrong: ') + response.status)
-    }
-  }).catch((error) => {
-    alert(i18n.t('Something went wrong: ') + error.message)
-  })
-
-  return userId
+  return null
 }
 
 /**

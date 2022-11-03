@@ -10,7 +10,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import { IS_SINGLE_SERVER } from './branding/Config.js'
 import {
-  fetchCredentials,
+  postLogin,
   getUsageConditions,
   getCredentials,
   getUserConfig,
@@ -35,20 +35,20 @@ export const ServerScreen = (props) => {
     const credentials = await getCredentials(server.url)
     if (!credentials) {
       setDisplayUpdateCredentialsModal(true)
-    } else
-      await fetchCredentials(server.url, credentials, (user) => {
-	setUser(user)
-	setDisplayUpdateCredentialsModal(false)
-      })
+    } else {
+      const user = await postLogin(server.url, credentials)
+      setUser(user)
+      setDisplayUpdateCredentialsModal(false)
+    }
   }
   useEffect(() => { tryLogin() }, [])
 
   const fetchTermsOfUse = async () => {
-    if (termsOfUse) return
+    if (termsOfUse || !user) return
     const terms = await getUsageConditions(server.url)
     setTermsOfUse(terms)
   }
-  useEffect(() => { fetchTermsOfUse() }, [])
+  useEffect(() => { fetchTermsOfUse() }, [user])
 
   const fetchUserConfig = async () => {
     if (userConfig) return
