@@ -50,25 +50,26 @@ export const removeCredentials = async (serverURL) => {
  * @param {Function} callbackFunction The function to call if the connection is successful
  */
 export const fetchCredentials = async (serverURL, credentials, callbackFunction) => {
-  fetch(`https://${serverURL}/api/auth/login`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: credentials.username,
-      password: credentials.password
+  try {
+    const response = await fetch(`https://${serverURL}/api/auth/login`, {
+      method: 'POST',
+      headers: {
+	Accept: 'application/json',
+	'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+	username: credentials.username,
+	password: credentials.password
+      })
     })
-  }).then((response) => {
     if (response.status === 200) {
-      callbackFunction()
+      await callbackFunction(await response.json())
     } else {
       alert(i18n.t('Wrong credentials'))
     }
-  }).catch((error) => {
+  } catch(error) {
     alert(i18n.t('Something went wrong: ') + error.message)
-  })
+  }
 }
 
 /**
@@ -101,60 +102,71 @@ export const getCurrentUserID = async (serverURL) => {
 }
 
 /**
- * Get the TOU of a specific server
+ * Get the usage conditions of a given server
  * @param {String} serverURL URL of the server
- * @returns The TOU of the server as object {title, url} or null if no TOU is available
+ * @returns The usage conditions of the server as object {title, url} or null if no condition is available
  */
-export const fetchTOU = async (serverURL) => {
-  let TOU = null
-  fetch(`https://${serverURL}/api/system/usage_conditions`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
+export const getUsageConditions = async (serverURL) => {
+  try {
+    const response = await fetch(`https://${serverURL}/api/system/usage_conditions`, {
+      method: 'GET',
+      headers: {
+	Accept: 'application/json',
+	'Content-Type': 'application/json'
+      }
+    })
     if (response.status === 200) {
-      // TODO:
-      // We should check what is inside json()
-      // items.length raise an error
-      if (response.json().items.length > 0) {
-        // Assuming we only have one TOU
-        TOU = response.json().items[0]
+      const body = await response.json()
+      if (body.items.length > 0) {
+	// Assuming we only have one usage condition
+	return body.items[0]
       }
     } else {
       alert(i18n.t('Something went wrong: ') + response.status)
     }
-  }).catch((error) => {
-    alert(i18n.t('Something went wrong: ') + error.message)
-  })
 
-  return TOU
+  } catch (error) {
+    alert(i18n.t('Something went wrong: ') + error.message)
+  }
+  return null
 }
 
-/**
- * Ask the server if the user has accepted the TOU
- * @param {String} serverURL URL of the server
- * @param {number} userId Id of the user
- * @returns True if the user has accepted the TOU, false otherwise
- */
-export const hasAcceptedTOU = async (serverURL, userId) => {
-  let hasAccepted = false
-  fetch(`https://${serverURL}/api/user/${userId}/config`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
+export const getUserConfig = async (serverURL, userId) => {
+  try {
+    const response = await fetch(`https://${serverURL}/api/users/${userId}/config`, {
+      method: 'GET',
+      headers: {
+	Accept: 'application/json',
+	'Content-Type': 'application/json'
+      }
+    })
     if (response.status === 200) {
-      hasAccepted = response.json().parameters['usage_conditions__status'] === 'accepted'
+      return await response.json()
     } else {
       alert(i18n.t('Something went wrong: ') + response.status)
     }
-  }).catch((error) => {
+  }
+  catch (error) {
     alert(i18n.t('Something went wrong: ') + error.message)
-  })
+  }
+  return null
+}
 
-  return hasAccepted
+export const putUserConfig = async (serverURL, userId, config) => {
+  try {
+    const response = await fetch(`https://${serverURL}/api/users/${userId}/config`, {
+      method: 'PUT',
+      headers: {
+	Accept: 'application/json',
+	'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(config)
+    })
+    if (!response.ok) {
+      alert(i18n.t('Something went wrong: ') + response.status)
+    }
+  }
+  catch (error) {
+    alert(i18n.t('Something went wrong: ') + error.message)
+  }
 }

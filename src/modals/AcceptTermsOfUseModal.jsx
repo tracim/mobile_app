@@ -2,17 +2,19 @@ import { useState } from 'react'
 import { Link } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
+  Linking,
   Text,
   TouchableOpacity as Button
 } from 'react-native'
 import { CustomModal } from './CustomModal.jsx'
-import { fetchCredentials, storeCredentials } from '../authentificationHelper.js'
 import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
 import BouncyCheckbox from "react-native-bouncy-checkbox"
 
-export const AcceptTOUModal = (props) => {
+export const AcceptTermsOfUseModal = (props) => {
   const { t } = useTranslation()
+
+  const [ accepted, setAccepted ]  = useState(false)
 
   return (
     <CustomModal
@@ -27,12 +29,12 @@ export const AcceptTOUModal = (props) => {
         {t('Please read and accept the terms of use of the server to be able to connect.')}
       </Text>
 
-      <Link
-        to={props.TOU.url}
+      <Text
         style={styles.link}
+	onPress={async () => { await Linking.openURL(props.termsOfUse.url)}}
       >
         {t('Terms of use')}
-      </Link>
+      </Text>
 
       <BouncyCheckbox
         size={25}
@@ -42,19 +44,17 @@ export const AcceptTOUModal = (props) => {
         iconStyle={{ borderColor: "red" }}
         innerIconStyle={{ borderWidth: 2 }}
         textStyle={{ fontFamily: "JosefinSans-Regular" }}
-        onPress={(isChecked) => {}}
+        onPress={setAccepted}
       />
 
       <Button
-        style={true
-          ? [styles.button, styles.buttonDisabled, modalStyles.callToActionButton]
-          : [styles.button, modalStyles.callToActionButton]
-        }
-        disabled={true}
+        style={accepted ? [styles.button, modalStyles.callToActionButton] : [styles.button, modalStyles.callToActionButton, styles.buttonDisabled]}
+	disabled={!accepted}
+	onPress={props.handleAccepted}
       >
         <Text style={styles.buttonText}>{t('Validate')}</Text>
       </Button>
     </CustomModal>
   )
 }
-export default AcceptTOUModal
+export default AcceptTermsOfUseModal

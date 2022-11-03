@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
-import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import { useTranslation } from 'react-i18next'
 import {
-  SafeAreaView,
   StatusBar,
-  TouchableHighlight,
   View
 } from 'react-native'
 import {
@@ -18,9 +14,8 @@ import {
 } from './branding/Config.js'
 import { styles } from './styles.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import WebView from './Webview.jsx'
 import MultipleServerMenu from './MultipleServerMenu.jsx'
-import SingleServerMenu from './SingleServerMenu.jsx'
+import ServerScreen from './ServerScreen.jsx'
 
 export const Tracim = () => {
   const { t } = useTranslation()
@@ -52,77 +47,48 @@ export const Tracim = () => {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
-
-        {IS_SINGLE_SERVER
-          ? (
-            <SingleServerMenu
-              onPressServer={navigation.navigate}
-            />
-          ) : (
-            <MultipleServerMenu
-              serverList={serverList}
-              onPressServer={navigation.navigate}
-              onPressAdd={(server) => setServerList([...serverList, server])}
-              onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
-            />
-          )}
-      </View>
-    )
-  }
-
-  function WebViewScreen({ route, navigation }) {
-    return (
-      <View style={styles.pageContainer}>
-        <StatusBar />
-        <SafeAreaView style={styles.pageContainer}>
-          <WebView
-            onClickGoBack={() => navigation.goBack()}
-            screenId={route.params.screenId}
-            url={route.params.url}
-          />
-        </SafeAreaView>
-        {!IS_SINGLE_SERVER && (
-          <TouchableHighlight
-            style={styles.openServerMenuButton}
-            onPress={() => navigation.openDrawer()}
-          >
-            <Icon icon={faServer} />
-          </TouchableHighlight>
-        )}
+        <MultipleServerMenu
+          serverList={serverList}
+          onPressServer={(server) => { navigation.navigate(server.name)}}
+          onPressAdd={(server) => setServerList([...serverList, server])}
+          onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
+        />
       </View>
     )
   }
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName={t('Home')}
-        screenOptions={{
-          drawerActiveTintColor: 'white',
-          drawerActiveBackgroundColor: COLORS.PRIMARY,
-          drawerPosition: 'right'
-        }}
-      >
-        <Drawer.Screen
-          component={HomeScreen}
-          name={t('Home')}
-          options={{
-            headerShown: false,
-            swipeEnabled: !IS_SINGLE_SERVER
+    (!IS_SINGLE_SERVER || serverList.length > 0) && (
+      <NavigationContainer>
+	<Drawer.Navigator
+          initialRouteName={IS_SINGLE_SERVER ? serverList[0].name : t('Home')}
+          screenOptions={{
+            drawerActiveTintColor: 'white',
+            drawerActiveBackgroundColor: COLORS.PRIMARY,
+            drawerPosition: 'right'
           }}
-        />
-        {serverList.map(server => <Drawer.Screen
-          component={WebViewScreen}
-          initialParams={{ url: server.url }}
-          key={`drawer_${server.name}`}
-          name={server.name}
-          options={{
-            headerShown: false,
-            swipeEnabled: !IS_SINGLE_SERVER
-          }}
-        />)}
-      </Drawer.Navigator>
-    </NavigationContainer>
+	>
+          <Drawer.Screen
+            component={HomeScreen}
+            name={t('Home')}
+            options={{
+              headerShown: false,
+              swipeEnabled: !IS_SINGLE_SERVER
+            }}
+          />
+          {serverList.map(server => <Drawer.Screen
+				      component={ServerScreen}
+				      initialParams={{ server: server }}
+				      key={`drawer_${server.name}`}
+				      name={server.name}
+				      options={{
+					headerShown: false,
+					swipeEnabled: !IS_SINGLE_SERVER
+				      }}
+				    />)}
+	</Drawer.Navigator>
+      </NavigationContainer>
+    )
   )
 }
 export default Tracim
