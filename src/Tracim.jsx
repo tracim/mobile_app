@@ -76,16 +76,18 @@ export const Tracim = () => {
               swipeEnabled: !IS_SINGLE_SERVER
             }}
           />
-          {serverList.map(server => <Drawer.Screen
-				      component={ServerScreen}
-				      initialParams={{ server: server }}
-				      key={`drawer_${server.name}`}
-				      name={server.name}
-				      options={{
-					headerShown: false,
-					swipeEnabled: !IS_SINGLE_SERVER
-				      }}
-				    />)}
+          {serverList.map(server => (
+            <Drawer.Screen
+              component={ServerScreen}
+              initialParams={{ server: server }}
+              key={`drawer_${server.name}`}
+              name={server.name}
+              options={{
+                headerShown: false,
+                swipeEnabled: !IS_SINGLE_SERVER
+              }}
+            />
+          ))}
 	</Drawer.Navigator>
       </NavigationContainer>
     )
