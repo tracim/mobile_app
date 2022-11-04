@@ -49,7 +49,7 @@ export const Tracim = () => {
         <StatusBar />
         <MultipleServerMenu
           serverList={serverList}
-          onPressServer={(server) => { navigation.navigate(server.name)}}
+          onPressServer={(server) => { navigation.navigate(server.name) }}
           onPressAdd={(server) => setServerList([...serverList, server])}
           onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
         />
@@ -60,14 +60,14 @@ export const Tracim = () => {
   return (
     (!IS_SINGLE_SERVER || serverList.length > 0) && (
       <NavigationContainer>
-	<Drawer.Navigator
+        <Drawer.Navigator
           initialRouteName={IS_SINGLE_SERVER ? serverList[0].name : t('Home')}
           screenOptions={{
             drawerActiveTintColor: 'white',
             drawerActiveBackgroundColor: COLORS.PRIMARY,
             drawerPosition: 'right'
           }}
-	>
+        >
           <Drawer.Screen
             component={HomeScreen}
             name={t('Home')}
@@ -88,7 +88,7 @@ export const Tracim = () => {
               }}
             />
           ))}
-	</Drawer.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     )
   )

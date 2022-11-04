@@ -14,7 +14,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 export const AcceptTermsOfUseModal = (props) => {
   const { t } = useTranslation()
 
-  const [ accepted, setAccepted ]  = useState(false)
+  const [accepted, setAccepted] = useState(false)
 
   return (
     <CustomModal
@@ -31,7 +31,7 @@ export const AcceptTermsOfUseModal = (props) => {
 
       <Text
         style={styles.link}
-	onPress={async () => { await Linking.openURL(props.termsOfUse.url)}}
+        onPress={async () => { await Linking.openURL(props.termsOfUse.url) }}
       >
         {t('Terms of use')}
       </Text>
@@ -44,8 +44,8 @@ export const AcceptTermsOfUseModal = (props) => {
 
       <Button
         style={accepted ? [styles.button, modalStyles.callToActionButton] : [styles.button, modalStyles.callToActionButton, styles.buttonDisabled]}
-	disabled={!accepted}
-	onPress={props.handleAccepted}
+        disabled={!accepted}
+        onPress={props.handleAccepted}
       >
         <Text style={styles.buttonText}>{t('Validate')}</Text>
       </Button>

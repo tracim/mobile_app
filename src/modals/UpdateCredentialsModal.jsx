@@ -62,8 +62,8 @@ export const UpdateCredentialsModal = (props) => {
           : [styles.button, modalStyles.callToActionButton]
         }
         onPress={async () => {
-          await postLogin(props.currentServerURL,{ username, password })
-	  await storeCredentials(props.currentServerURL, username, password)
+          await postLogin(props.currentServerURL, { username, password })
+          await storeCredentials(props.currentServerURL, username, password)
           props.hideModal()
         }}
         disabled={username === '' || password === ''}

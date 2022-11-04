@@ -71,35 +71,35 @@ export const ServerScreen = (props) => {
   return (
     <SafeAreaView style={styles.pageContainer}>
       {!displayServer && (
-	<Image
+        <Image
           source={require('./branding/logo.png')}
           resizeMode='center'
           style={styles.logo}
-	/>
+        />
       )}
 
       {displayUpdateCredentialsModal && (
-	<UpdateCredentialsModal
+        <UpdateCredentialsModal
           hideModal={() => {
             setDisplayUpdateCredentialsModal(false)
           }}
           currentServerURL={server.url}
           currentServerName={server.name}
           showCloseButton={false}
-	/>
+        />
       )}
 
       {(termsOfUse && !areTermsOfUseAccepted) && (
         <AcceptTermsOfUseModal
           termsOfUse={termsOfUse}
-	  handleAccepted={() => {
-	    setUserConfig({parameters: {...userConfig.parameters, usage_conditions__status: 'accepted'}})
-	  }}
-	/>
+          handleAccepted={() => {
+            setUserConfig({ parameters: { ...userConfig.parameters, usage_conditions__status: 'accepted' } })
+          }}
+        />
       )}
 
       {displayServer && (
-	<View style={styles.pageContainer}>
+        <View style={styles.pageContainer}>
           <StatusBar />
           <WebView
             onClickGoBack={() => props.navigation.goBack()}
@@ -114,7 +114,7 @@ export const ServerScreen = (props) => {
               <Icon icon={faServer} />
             </TouchableHighlight>
           )}
-	</View>
+        </View>
       )}
     </SafeAreaView>
   )

@@ -53,8 +53,8 @@ export const postLogin = async (serverURL, credentials) => {
     const response = await fetch(`https://${serverURL}/api/auth/login`, {
       method: 'POST',
       headers: {
-	Accept: 'application/json',
-	'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(credentials)
     })
@@ -63,7 +63,7 @@ export const postLogin = async (serverURL, credentials) => {
     } else {
       alert(i18n.t('Wrong credentials'))
     }
-  } catch(error) {
+  } catch (error) {
     alert(i18n.t('Something went wrong: ') + error.message)
   }
   return null
@@ -79,15 +79,15 @@ export const getUsageConditions = async (serverURL) => {
     const response = await fetch(`https://${serverURL}/api/system/usage_conditions`, {
       method: 'GET',
       headers: {
-	Accept: 'application/json',
-	'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       }
     })
     if (response.status === 200) {
       const body = await response.json()
       if (body.items.length > 0) {
-	// Assuming we only have one usage condition
-	return body.items[0]
+        // Assuming we only have one usage condition
+        return body.items[0]
       }
     } else {
       alert(i18n.t('Something went wrong: ') + response.status)
@@ -104,8 +104,8 @@ export const getUserConfig = async (serverURL, userId) => {
     const response = await fetch(`https://${serverURL}/api/users/${userId}/config`, {
       method: 'GET',
       headers: {
-	Accept: 'application/json',
-	'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       }
     })
     if (response.status === 200) {
@@ -125,8 +125,8 @@ export const putUserConfig = async (serverURL, userId, config) => {
     const response = await fetch(`https://${serverURL}/api/users/${userId}/config`, {
       method: 'PUT',
       headers: {
-	Accept: 'application/json',
-	'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(config)
     })

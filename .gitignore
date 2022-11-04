@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 
 # macOS / Xcode
+.idea/
 .DS_Store
 ios/Pods/
 ios/build/
