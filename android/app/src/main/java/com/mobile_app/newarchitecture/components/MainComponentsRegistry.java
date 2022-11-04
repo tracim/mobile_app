@@ -1,4 +1,4 @@
-package com.mobile_app.newarchitecture.components;
+package com.tracim_mobile_app.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

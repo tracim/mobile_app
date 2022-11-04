@@ -1,4 +1,4 @@
-package com.mobile_app;
+package com.tracim_mobile_app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -18,7 +18,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "mobile_app";
+    return "tracim_mobile_app";
   }
 
   /**

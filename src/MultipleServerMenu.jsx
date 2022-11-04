@@ -11,21 +11,14 @@ import {
   TouchableOpacity as Button
 } from 'react-native'
 import {
-  fetchCredentials,
-  getCredentials,
   removeCredentials
 } from './authentificationHelper.js'
 import { styles } from './styles.js'
 import CreateNewServerModal from './modals/CreateNewServerModal.jsx'
-import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 
 export const MultipleServerMenu = (props) => {
   const { t } = useTranslation()
   const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
-  const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
-
-  const [currentServerURL, setCurrentServerURL] = useState('')
-  const [currentServerName, setCurrentServerName] = useState('')
 
   return (
     <SafeAreaView style={styles.pageContainer}>
@@ -42,14 +35,6 @@ export const MultipleServerMenu = (props) => {
         showCloseButton
       />
 
-      <UpdateCredentialsModal
-        modalVisible={displayUpdateCredentialsModal}
-        hideModal={() => setDisplayUpdateCredentialsModal(false)}
-        currentServerURL={currentServerURL}
-        currentServerName={currentServerName}
-        showCloseButton
-      />
-
       {props.serverList.length > 0 ? (
         <ScrollView>
           {props.serverList.map(server =>
@@ -59,20 +44,7 @@ export const MultipleServerMenu = (props) => {
             >
               <Button
                 style={[styles.button, styles.serverMenuButton]}
-                onPress={async () => {
-                  const credentials = await getCredentials(server.url)
-                  if (credentials) {
-                    fetchCredentials(
-                      server.url,
-                      credentials,
-                      () => props.onPressServer(server.name)
-                    )
-                  } else {
-                    setCurrentServerURL(server.url)
-                    setCurrentServerName(server.name)
-                    setDisplayUpdateCredentialsModal(true)
-                  }
-                }}
+                onPress={() => props.onPressServer(server)}
                 onLongPress={() => {
                   removeCredentials(server.url)
                 }}

@@ -1,4 +1,4 @@
-package com.mobile_app.newarchitecture.modules;
+package com.tracim_mobile_app.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

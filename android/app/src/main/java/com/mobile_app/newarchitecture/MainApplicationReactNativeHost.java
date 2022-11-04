@@ -1,4 +1,4 @@
-package com.mobile_app.newarchitecture;
+package com.tracim_mobile_app.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.mobile_app.BuildConfig;
-import com.mobile_app.newarchitecture.components.MainComponentsRegistry;
-import com.mobile_app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.tracim_mobile_app.BuildConfig;
+import com.tracim_mobile_app.newarchitecture.components.MainComponentsRegistry;
+import com.tracim_mobile_app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
