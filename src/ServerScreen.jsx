@@ -22,10 +22,11 @@ import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 import AcceptTermsOfUseModal from './modals/AcceptTermsOfUseModal.jsx'
 
 export const ServerScreen = (props) => {
-
   const server = props.route.params.server
 
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
+  const [displayAcceptTermsOfUseModal, setDisplayAcceptTermsOfUseModal] = useState(false)
+  const [displayServer, setDisplayServer] = useState(false)
   const [user, setUser] = useState(null)
   const [userConfig, setUserConfig] = useState(null)
   const [termsOfUse, setTermsOfUse] = useState(null)
@@ -41,7 +42,7 @@ export const ServerScreen = (props) => {
       setDisplayUpdateCredentialsModal(false)
     }
   }
-  useEffect(() => { tryLogin() }, [])
+  useEffect(() => { tryLogin() })
 
   const fetchTermsOfUse = async () => {
     if (termsOfUse || !user) return
@@ -51,13 +52,11 @@ export const ServerScreen = (props) => {
   useEffect(() => { fetchTermsOfUse() }, [user])
 
   const fetchUserConfig = async () => {
-    if (userConfig) return
-    const config = user ? await getUserConfig(server.url, user.user_id) : null
+    if (userConfig || !user) return
+    const config = await getUserConfig(server.url, user.user_id)
     setUserConfig(config)
   }
   useEffect(() => { fetchUserConfig() }, [user])
-
-  const areTermsOfUseAccepted = userConfig && userConfig.parameters.usage_conditions__status === 'accepted'
 
   const updateUserConfig = async () => {
     if (user && userConfig) {
@@ -66,14 +65,20 @@ export const ServerScreen = (props) => {
   }
   useEffect(() => { updateUserConfig() }, [user, userConfig])
 
-  const displayServer = (!displayUpdateCredentialsModal && (!termsOfUse || areTermsOfUseAccepted))
+  useEffect(() => {
+    if (!user || !userConfig) return
+
+    const areTermsOfUseAccepted = userConfig.parameters.usage_conditions__status === 'accepted'
+    setDisplayAcceptTermsOfUseModal(termsOfUse && !areTermsOfUseAccepted)
+    setDisplayServer(!displayUpdateCredentialsModal && (!termsOfUse || areTermsOfUseAccepted))
+  }, [user, userConfig])
 
   return (
     <SafeAreaView style={styles.pageContainer}>
       {!displayServer && (
         <Image
           source={require('./branding/logo.png')}
-          resizeMode='center'
+          resizeMode='contain'
           style={styles.logo}
         />
       )}
@@ -89,7 +94,7 @@ export const ServerScreen = (props) => {
         />
       )}
 
-      {(termsOfUse && !areTermsOfUseAccepted) && (
+      {displayAcceptTermsOfUseModal && (
         <AcceptTermsOfUseModal
           termsOfUse={termsOfUse}
           handleAccepted={() => {

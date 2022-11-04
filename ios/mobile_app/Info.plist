@@ -26,16 +26,20 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>NSExceptionAllowsInsecureHTTPLoads</key>
 			<true/>
 		</dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Need camera access to take pictures</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need library access to upload images</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -52,9 +56,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key> 
-	<string>Need library access to upload images</string> 
-	<key>NSCameraUsageDescription</key> 
-	<string>Need camera access to take pictures</string> 
 </dict>
 </plist>
