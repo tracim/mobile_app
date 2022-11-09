@@ -48,16 +48,11 @@ npm-debug.*
 web-build/
 yarn-error.log
 
-**/fastlane/report.xml
-**/fastlane/Preview.html
-**/fastlane/screenshots
-**/fastlane/test_output
-
 # Bundle artifact
 *.jsbundle
 
 # Ruby / CocoaPods
-/ios/Pods/
+ios/Pods/
 /vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
