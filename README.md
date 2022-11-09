@@ -1,6 +1,5 @@
 <img src="./src/branding/logo.png" alt="Tracim's logo" width="250">
 </br>
-</br>
 
 # Tracim's mobile app
 
@@ -67,7 +66,7 @@ First, you will need to start Metro, that "takes in an entry file and various op
 npx react-native start
 ```
 
-Then, in an other terminal you can run the application.
+Then, in an other terminal you can run the application using:
 
 ```
 npx react-native run-android
@@ -90,7 +89,7 @@ If the bug or feature is application specific, i.e., related to features that yo
 
 ### Coding
 
-You can also [review the code and propose changes](https://github.com/tracim/tracim/pulls).
+You can also [review the code and propose changes](https://github.com/tracim/mobile_app/pulls).
 
 For more information, see the [Contributing](https://github.com/tracim/mobile_app/blob/main/CONTRIBUTING.md) page.
 
