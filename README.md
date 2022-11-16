@@ -119,5 +119,14 @@ To fix this, re-run the `npm install` command.
   - in MacOS `sdk.dir = /Users/<USERNAME>/Library/Android/sdk`
   - in Linux `sdk.dir = /home/<USERNAME>/Android/Sdk`
 
+### [Android] BUILD FAILED when run-android
+
+A build can fail for several reasons, if your error is the same as below, you probably have an old version of the application installed on your phone/simulator. Uninstall the old version and relaunch the command.
+
+```
+error Failed to install the app. Make sure you have the Android development environment set up: https://reactnative.dev/docs/environment-setup.
+Error: Command failed: ./gradlew app:installDebug -PreactNativeDevServerPort=8081
+```
+
 ### [iOS] No such module found
 You probably opened `xcodeproj` instead of `xcworkspace`. You should always open on Xcode th file `mobile_app/ios/mobile_app.xcworkspace`.

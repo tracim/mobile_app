@@ -43,7 +43,7 @@ export const Tracim = () => {
     setServerList(serverList)
   }
 
-  function HomeScreen({ navigation }) {
+  function HomeScreen ({ navigation }) {
     return (
       <View style={styles.pageContainer}>
         <StatusBar />
