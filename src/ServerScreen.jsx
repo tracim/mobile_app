@@ -27,6 +27,7 @@ export const ServerScreen = (props) => {
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
   const [displayAcceptTermsOfUseModal, setDisplayAcceptTermsOfUseModal] = useState(false)
   const [displayServer, setDisplayServer] = useState(false)
+
   const [user, setUser] = useState(null)
   const [userConfig, setUserConfig] = useState(null)
   const [termsOfUse, setTermsOfUse] = useState(null)
@@ -83,25 +84,22 @@ export const ServerScreen = (props) => {
         />
       )}
 
-      {displayUpdateCredentialsModal && (
-        <UpdateCredentialsModal
-          hideModal={() => {
-            setDisplayUpdateCredentialsModal(false)
-          }}
-          currentServerURL={server.url}
-          currentServerName={server.name}
-          showCloseButton={false}
-        />
-      )}
+      <UpdateCredentialsModal
+        currentServerURL={server.url}
+        currentServerName={server.name}
+        goBackToHomePage={() => props.navigation.navigate('Home')}
+        hideModal={() => setDisplayUpdateCredentialsModal(false)}
+        modalVisible={displayUpdateCredentialsModal}
+        showCloseButton={!IS_SINGLE_SERVER}
+      />
 
-      {displayAcceptTermsOfUseModal && (
-        <AcceptTermsOfUseModal
-          termsOfUse={termsOfUse}
-          handleAccepted={() => {
-            setUserConfig({ parameters: { ...userConfig.parameters, usage_conditions__status: 'accepted' } })
-          }}
-        />
-      )}
+      <AcceptTermsOfUseModal
+        handleAccepted={() => {
+          setUserConfig({ parameters: { ...userConfig.parameters, usage_conditions__status: 'accepted' } })
+        }}
+        modalVisible={displayAcceptTermsOfUseModal}
+        termsOfUse={termsOfUse}
+      />
 
       {displayServer && (
         <View style={styles.pageContainer}>

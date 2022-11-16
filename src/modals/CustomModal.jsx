@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 import { View, Modal, Text, Pressable } from 'react-native'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
@@ -7,17 +8,30 @@ import { modalStyles } from './modalStyles.js'
 import { useTranslation } from 'react-i18next'
 
 export const CustomModal = (props) => {
-  const [modalVisible, setModalVisible] = useState(props.modalVisible)
+  const [modalVisible, setModalVisible] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
     setModalVisible(props.modalVisible)
-  }, [props.modalVisible])
+  })
+
+  // INFO - G.B. - 2022-11-16 - In React Native Navigation the life cycle works a bit
+  // differently than in React, the elements are not actually unmounted. The function below
+  // simulates a "componentDidUnmount" to clear the state and return to the initial value.
+  // See more at https://reactnavigation.org/docs/navigation-lifecycle/
+  useFocusEffect(
+    useCallback(() => {
+      return () => setModalVisible(false)
+    }, [])
+  )
 
   return (
     <Modal
       animationType='fade'
-      onRequestClose={props.hideModal}
+      onRequestClose={() => {
+        setModalVisible(false)
+        props.hideModal()
+      }}
       transparent
       visible={modalVisible}
     >
@@ -30,7 +44,10 @@ export const CustomModal = (props) => {
             {props.showCloseButton && (
               <Pressable
                 accessibilityLabel={t('Close')}
-                onPress={props.hideModal}
+                onPress={() => {
+                  setModalVisible(false)
+                  props.hideModal()
+                }}
                 style={modalStyles.closeButton}
               >
                 <Icon icon={faTimes} />
@@ -46,5 +63,6 @@ export const CustomModal = (props) => {
 
 PropTypes.defaultProps = {
   hideModal: () => { },
+  modalVisible: false,
   showCloseButton: true
 }

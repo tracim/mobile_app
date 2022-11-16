@@ -18,8 +18,8 @@ export const UpdateCredentialsModal = (props) => {
 
   return (
     <CustomModal
+      hideModal={props.goBackToHomePage}
       modalVisible={props.modalVisible}
-      hideModal={props.hideModal}
       showCloseButton={props.showCloseButton}
       title={t('Add credentials for {{currentServerName}}', {
         currentServerName: props.currentServerName
@@ -62,9 +62,11 @@ export const UpdateCredentialsModal = (props) => {
           : [styles.button, modalStyles.callToActionButton]
         }
         onPress={async () => {
-          await postLogin(props.currentServerURL, { username, password })
-          await storeCredentials(props.currentServerURL, username, password)
-          props.hideModal()
+          const user = await postLogin(props.currentServerURL, { username, password })
+          if (user) {
+            await storeCredentials(props.currentServerURL, username, password)
+            props.hideModal()
+          }
         }}
         disabled={username === '' || password === ''}
       >
