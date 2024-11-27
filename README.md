@@ -13,7 +13,7 @@ The **Tracim's mobile app** allows you to access multiple Tracim servers quickly
 
 ## Setting up the development environment
 
-Tracil's mobile app uses [React Native CLI](https://reactnative.dev/docs/environment-setup) and supports Android and iOS.
+Tracim's mobile app uses [React Native CLI](https://reactnative.dev/docs/environment-setup) and supports Android and iOS.
 
 ### Android development
 
