@@ -31,6 +31,7 @@ export const UpdateCredentialsModal = (props) => {
       <TextInput
         style={[styles.input, styles.blackText]}
         keyboardType='email-address'
+        autoCapitalize='none'
         onChangeText={setUsername}
         placeholder={t('Email or username')}
       />

@@ -36,7 +36,8 @@ export const CreateNewServerModal = (props) => {
       <TextInput
         keyboardType='url'
         onChangeText={setServerURL}
-        placeholder={t('Server URL')}
+        placeholder='mydomain-tracim.org'
+        autoCapitalize='none'
         style={[styles.input, styles.blackText]}
       />
 

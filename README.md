@@ -6,7 +6,7 @@
 Tracim is an [open source](https://github.com/tracim/tracim) software designed to help you and your team to a better collaboration.
 
 Any questions, remarks? Reach us on [Tracim Community](https://public-community.tracim.fr/). </br>
-More informations on our [website](https://www.algoo.fr/fr/tracim).
+More informations on our [website](https://www.tracim.fr).
 
 The **Tracim's mobile app** allows you to access multiple Tracim servers quickly and easily.
 
@@ -127,6 +127,17 @@ A build can fail for several reasons, if your error is the same as below, you pr
 error Failed to install the app. Make sure you have the Android development environment set up: https://reactnative.dev/docs/environment-setup.
 Error: Command failed: ./gradlew app:installDebug -PreactNativeDevServerPort=8081
 ```
+
+### [android] Missing ANDROID_HOME or JAVA_HOME or adb
+You might need to run:
+export ANDROID_HOME=/home/<USERNAME>/Android/Sdk/
+export JAVA_HOME=/usr/lib/jvm/java-<java_version>-openjdk-amd64/
+export PATH=/home/<USERNAME>/Android/Sdk/platform-tools/:$PATH
+
+### [android] Update your javac version
+javac is java SDK. To select javac version from the already installed:
+
+`sudo update-alternatives --config javac`
 
 ### [iOS] No such module found
 You probably opened `xcodeproj` instead of `xcworkspace`. You should always open on Xcode th file `mobile_app/ios/mobile_app.xcworkspace`.
