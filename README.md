@@ -1,5 +1,5 @@
 <img src="./src/branding/logo.png" alt="Tracim's logo" width="250">
-</br>
+<br />
 
 # Tracim's mobile app
 
