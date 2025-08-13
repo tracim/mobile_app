@@ -26,7 +26,8 @@ export const CreateNewServerModal = (props) => {
       </Text>
       <TextInput
         onChangeText={setServerName}
-        placeholder={t('Server name')}
+        placeholder={t('My Domain')}
+        placeholderTextColor={'#999'}
         style={[styles.input, styles.blackText]}
       />
 
@@ -36,7 +37,8 @@ export const CreateNewServerModal = (props) => {
       <TextInput
         keyboardType='url'
         onChangeText={setServerURL}
-        placeholder='mydomain-tracim.org'
+        placeholder='https://mytracimdomain.org'
+        placeholderTextColor={'#999'}
         autoCapitalize='none'
         style={[styles.input, styles.blackText]}
       />

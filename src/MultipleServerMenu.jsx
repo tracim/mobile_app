@@ -4,12 +4,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { useTranslation } from 'react-i18next'
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   Text,
   View,
   TouchableOpacity as Button
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   removeCredentials
 } from './authentificationHelper.js'

@@ -19,13 +19,13 @@ import {
 import { WebView } from 'react-native-webview'
 import { styles } from './styles.js'
 
-export const Webview = (props) => {
+export const TracimWebview = (props) => {
   const [refresherEnabled, setEnableRefresher] = useState(false)
   const [canGoBack, setCanGoBack] = useState(false)
   const [httpsUrl, setHttpsUrl] = useState('')
   const [screenId, setScreenId] = useState(props.screenId)
   const [isRefLoaded, setIsRefLoaded] = useState(false)
-  const webViewRef = useRef()
+  const webViewRef = useRef(null)
 
   useEffect(() => {
     setIsRefLoaded(true)
@@ -37,19 +37,19 @@ export const Webview = (props) => {
   }, [screenId])
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      const goBackAction = () => {
-        // FIXME - G.B. - 2022-10-03 - Need to include canGoBack here
-        if (webViewRef.current) {
-          webViewRef.current.goBack()
-        } else props.onClickGoBack()
-        return true
-      }
-      BackHandler.addEventListener('hardwareBackPress', goBackAction)
+    if (Platform.OS !== 'android') return
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', goBackAction)
+    const goBackAction = () => {
+      // FIXME - G.B. - 2022-10-03 - Need to include canGoBack here
+      if (webViewRef.current) {
+        webViewRef.current.goBack()
+      } else props.onClickGoBack()
+      return true
     }
-  }, [canGoBack, isRefLoaded])
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', goBackAction)
+    return () => subscription.remove()
+  }, [canGoBack, isRefLoaded, props.onClickGoBack])
 
   const handleNavigationStateChange = (e) => setCanGoBack(e.canGoBack)
 
@@ -104,4 +104,4 @@ export const Webview = (props) => {
     </ScrollView>
   )
 }
-export default Webview
+export default TracimWebview

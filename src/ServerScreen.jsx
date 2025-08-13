@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import {
   Image,
-  SafeAreaView,
   StatusBar,
-  TouchableHighlight,
+  Pressable,
   View
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
+import { useNavigation } from '@react-navigation/native'
 import { IS_SINGLE_SERVER } from './branding/Config.js'
 import {
   postLogin,
@@ -17,11 +18,12 @@ import {
   putUserConfig
 } from './authentificationHelper.js'
 import { styles } from './styles.js'
-import WebView from './Webview.jsx'
+import TracimWebView from './TracimWebview.jsx'
 import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 import AcceptTermsOfUseModal from './modals/AcceptTermsOfUseModal.jsx'
 
 export const ServerScreen = (props) => {
+  const navigation = useNavigation()
   const server = props.route.params.server
 
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
@@ -43,21 +45,22 @@ export const ServerScreen = (props) => {
       setDisplayUpdateCredentialsModal(false)
     }
   }
-  useEffect(() => { tryLogin() })
+  useEffect(() => { tryLogin() }, [])
 
   const fetchTermsOfUse = async () => {
     if (termsOfUse || !user) return
     const terms = await getUsageConditions(server.url)
     setTermsOfUse(terms)
   }
-  useEffect(() => { fetchTermsOfUse() }, [user])
-
   const fetchUserConfig = async () => {
     if (userConfig || !user) return
     const config = await getUserConfig(server.url, user.user_id)
     setUserConfig(config)
   }
-  useEffect(() => { fetchUserConfig() }, [user])
+  useEffect(() => {
+    fetchTermsOfUse()
+    fetchUserConfig()
+  }, [user])
 
   const updateUserConfig = async () => {
     if (user && userConfig) {
@@ -87,7 +90,7 @@ export const ServerScreen = (props) => {
       <UpdateCredentialsModal
         currentServerURL={server.url}
         currentServerName={server.name}
-        goBackToHomePage={() => props.navigation.navigate('Home')}
+        goBackToHomePage={() => navigation.navigate('Home')}
         hideModal={() => setDisplayUpdateCredentialsModal(false)}
         modalVisible={displayUpdateCredentialsModal}
         showCloseButton={!IS_SINGLE_SERVER}
@@ -103,19 +106,21 @@ export const ServerScreen = (props) => {
 
       {displayServer && (
         <View style={styles.pageContainer}>
-          <StatusBar />
-          <WebView
-            onClickGoBack={() => props.navigation.goBack()}
+          <StatusBar barStyle='default' />
+
+          <TracimWebView
+            onClickGoBack={() => navigation.goBack()}
             screenId={props.route.params.screenId}
             url={server.url}
           />
+
           {!IS_SINGLE_SERVER && (
-            <TouchableHighlight
+            <Pressable
               style={styles.openServerMenuButton}
-              onPress={() => props.navigation.openDrawer()}
+              onPress={() => navigation.openDrawer()}
             >
               <Icon icon={faServer} />
-            </TouchableHighlight>
+            </Pressable>
           )}
         </View>
       )}

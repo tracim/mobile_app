@@ -1,12 +1,19 @@
 <img src="./src/branding/logo.png" alt="Tracim's logo" width="250">
-<br />
+<br /><br /><br />
+
+
+
+
+#### Disclaimer
+Doc written for react-native 0.70.4. Not everything has been tested now app is using react-native 0.80.2.
+
 
 # Tracim's mobile app
 
 Tracim is an [open source](https://github.com/tracim/tracim) software designed to help you and your team to a better collaboration.
 
-Any questions, remarks? Reach us on [Tracim Community](https://public-community.tracim.fr/). </br>
-More informations on our [website](https://www.tracim.fr).
+Any questions, remarks? Reach us on [Tracim Community](https://public-community.tracim.fr/). <br />
+More information on our [website](https://www.tracim.fr).
 
 The **Tracim's mobile app** allows you to access multiple Tracim servers quickly and easily.
 
@@ -17,28 +24,27 @@ Tracim's mobile app uses [React Native CLI](https://reactnative.dev/docs/environ
 
 ### Android development
 
-First, you will need:
+Requirements:
 - [Android Studio](https://developer.android.com/studio)
 - [Node](https://nodejs.org/en/download/package-manager/)
 - [Java Development Kit](http://openjdk.java.net/)
+  - requires java 17
 - [Watchman](https://facebook.github.io/watchman/docs/install/#buildinstall)
 
-Then, to install our dependencies you can run:
-
+Install dependencies:
 ```bash
 npm install
 ```
 
 ### iOS development
 
-First, you will need:
+Requirements:
 - Node & Watchman (you can use [Homebrew](http://brew.sh/) to install)
 - Ruby 2.7.6 (you can use a [Ruby version manager](https://github.com/rbenv/rbenv) if you only want to change the version on this project)
 - [Bundler](https://bundler.io/) to install Cocoapods
 - [Xcode](https://apps.apple.com/fr/app/xcode/id497799835)
 
-Then, to install our dependencies you can run:
-
+Install dependencies:
 ```bash
 npx pod-install ios
 ```
@@ -51,7 +57,7 @@ pod install
 ```
 
 
-## Setuping devices
+## Setup devices
 
 You will need to setup a device to test the application. You can use a real device or an emulator.
 
@@ -60,14 +66,15 @@ See the [React Native documentation](https://reactnative.dev/docs/running-on-dev
 
 ## Running the application
 
-First, you will need to start Metro, that "takes in an entry file and various options, and returns a single JavaScript file that includes all your code and its dependencies." — [Metro Docs](https://facebook.github.io/metro/docs/concepts)
+Metro takes in an entry file and various options, and returns a single JavaScript file that includes all your code and
+its dependencies. — [Metro Docs](https://facebook.github.io/metro/docs/concepts)
 
+Start Metro:
 ```bash
 npx react-native start
 ```
 
-Then, in an other terminal you can run the application using:
-
+In another terminal, run the app:
 ```
 npx react-native run-android
 ```
@@ -96,7 +103,7 @@ For more information, see the [Contributing](https://github.com/tracim/mobile_ap
 
 ## License
 
-Too know about Tracim's License, see [LICENSE.md](https://github.com/tracim/tracim/blob/develop/LICENSE.md).
+To know about Tracim's License, see [LICENSE.md](https://github.com/tracim/tracim/blob/develop/LICENSE.md).
 
 
 ## Troubleshooting
@@ -110,6 +117,33 @@ Sometimes after pulling the latest developments and trying to run `npx react-nat
 sh: 1: react-native: not found
 ```
 To fix this, re-run the `npm install` command.
+
+### Cache clean and rebuild
+
+```bash
+npx react-native start --reset-cache
+```
+```bash
+cd android && ./gradlew clean && cd ..
+npm run android
+```
+
+### [Android] Open react native dev tools
+
+```bash
+adb shell input keyevent 82
+```
+
+### [Android] Check your environment setup
+
+```bash
+npx react-native doctor
+```
+- Adb: requires ANDROID_HOME correct
+- JDK: requires JAVA_HOME correct
+- Android Studio: if not ok, install it in /opt/ works. Or create a symlink
+- Android SDK, if Versions found: N/A
+  - android studio > tools > sdk manager > sdk tools (tab) > check "android sdk command line tool (latest)"
 
 ### [Android] SDK location not found
 
@@ -130,14 +164,19 @@ Error: Command failed: ./gradlew app:installDebug -PreactNativeDevServerPort=808
 
 ### [android] Missing ANDROID_HOME or JAVA_HOME or adb
 You might need to run:
-export ANDROID_HOME=/home/<USERNAME>/Android/Sdk/
-export JAVA_HOME=/usr/lib/jvm/java-<java_version>-openjdk-amd64/
-export PATH=/home/<USERNAME>/Android/Sdk/platform-tools/:$PATH
+```bash
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+```
 
 ### [android] Update your javac version
-javac is java SDK. To select javac version from the already installed:
+javac is the java compiler for the SDK. To select javac version from the already installed ones:
 
-`sudo update-alternatives --config javac`
+```bash
+update-alternatives --config javac
+```
 
 ### [iOS] No such module found
 You probably opened `xcodeproj` instead of `xcworkspace`. You should always open on Xcode th file `mobile_app/ios/mobile_app.xcworkspace`.

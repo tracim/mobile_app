@@ -44,6 +44,7 @@ export const UpdateCredentialsModal = (props) => {
         onChangeText={setPassword}
         placeholder='********'
         secureTextEntry
+        autoCapitalize={'none'}
       />
 
       <Link
