@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, createContext } from 'react'
+import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
@@ -10,29 +10,32 @@ import {
   SERVER_URL
 } from './branding/Config.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {
+  ServerListProvider,
+  useServerList
+} from './ServerListContext.js'
 import HomeScreen from './HomeScreen.jsx'
 import ServerScreen from './ServerScreen.jsx'
 
 export const TracimWrapper = () => {
   return (
-    <GestureHandlerRootView>
-      <Tracim />
-    </GestureHandlerRootView>
+    <ServerListProvider>
+      <GestureHandlerRootView>
+        <Tracim />
+      </GestureHandlerRootView>
+    </ServerListProvider>
   )
 }
 export default TracimWrapper
 
-export const ServerListContext = createContext([])
-
 const Tracim = () => {
   // const { t } = useTranslation()
   const Drawer = createDrawerNavigator()
-
-  const [serverList, setServerList] = useState([])
+  const [serverList, setServerList] = useServerList()
 
   useEffect(() => {
     if (IS_SINGLE_SERVER) {
-      setServerList([{ url: SERVER_URL, name: SERVER_NAME }])
+      setServerList([{ url: SERVER_URL, name: SERVER_NAME, iconB64: '' }])
     } else {
       getServerList()
     }
@@ -54,40 +57,38 @@ const Tracim = () => {
 
   return (
     (!IS_SINGLE_SERVER || serverList.length > 0) && (
-      <ServerListContext value={[serverList, setServerList]}>
-        <NavigationContainer>
-          <Drawer.Navigator
-            initialRouteName={IS_SINGLE_SERVER ? serverList[0].name : 'Home'}
-            screenOptions={{
-              drawerActiveTintColor: 'white',
-              drawerActiveBackgroundColor: COLORS.PRIMARY,
-              drawerPosition: 'right'
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName={IS_SINGLE_SERVER ? serverList[0].name : 'Home'}
+          screenOptions={{
+            drawerActiveTintColor: 'white',
+            drawerActiveBackgroundColor: COLORS.PRIMARY,
+            drawerPosition: 'right'
+          }}
+        >
+          <Drawer.Screen
+            name={'Home'}
+            component={HomeScreen}
+            options={{
+              headerShown: false,
+              swipeEnabled: !IS_SINGLE_SERVER
             }}
-          >
+          />
+
+          {serverList.map(server => (
             <Drawer.Screen
-              name={'Home'}
-              component={HomeScreen}
+              name={server.name}
+              component={ServerScreen}
+              initialParams={{ server: server }}
               options={{
                 headerShown: false,
                 swipeEnabled: !IS_SINGLE_SERVER
               }}
+              key={`drawer_${server.name}`}
             />
-
-            {serverList.map(server => (
-              <Drawer.Screen
-                name={server.name}
-                component={ServerScreen}
-                initialParams={{ server: server }}
-                options={{
-                  headerShown: false,
-                  swipeEnabled: !IS_SINGLE_SERVER
-                }}
-                key={`drawer_${server.name}`}
-              />
-            ))}
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </ServerListContext>
+          ))}
+        </Drawer.Navigator>
+      </NavigationContainer>
     )
   )
 }

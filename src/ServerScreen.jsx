@@ -45,7 +45,9 @@ export const ServerScreen = (props) => {
       setDisplayUpdateCredentialsModal(false)
     }
   }
-  useEffect(() => { tryLogin() }, [])
+  useEffect(() => {
+    tryLogin()
+  })
 
   const fetchTermsOfUse = async () => {
     if (termsOfUse || !user) return
@@ -67,7 +69,9 @@ export const ServerScreen = (props) => {
       await putUserConfig(server.url, user.user_id, userConfig)
     }
   }
-  useEffect(() => { updateUserConfig() }, [user, userConfig])
+  useEffect(() => {
+    updateUserConfig()
+  }, [user, userConfig])
 
   useEffect(() => {
     if (!user || !userConfig) return

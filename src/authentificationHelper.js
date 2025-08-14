@@ -3,7 +3,7 @@ import i18n from '../i18next.scanner/i18n.js'
 
 /**
  * Get the credentials from the storage
- * @param {String} serverURL 
+ * @param {String} serverURL
  * @returns Null if no credentials are found, otherwise an object with the credentials \
  * {username, password}
  */

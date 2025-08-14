@@ -1,27 +1,41 @@
-import { useContext } from 'react'
+import { useState } from 'react'
 import {
   StatusBar,
-  View
+  View,
+  Text,
+  TouchableOpacity as Button
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 import { styles } from './styles.js'
-import MultipleServerMenu from './MultipleServerMenu.jsx'
-import {ServerListContext} from './Tracim.jsx'
+import ServerList from './ServerList.jsx'
+import SetServerModal from './modals/SetServerModal.jsx'
 
 
 function HomeScreen (props) {
-  const navigation = useNavigation()
-  const [serverList, setServerList] = useContext(ServerListContext)
+  const { t } = useTranslation()
+  const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
 
   return (
     <View style={styles.pageContainer}>
       <StatusBar barStyle='default' />
-      <MultipleServerMenu
-        serverList={serverList}
-        onPressServer={(server) => { navigation.navigate(server.name) }}
-        onPressAdd={(server) => setServerList([...serverList, server])}
-        onPressRemove={(server) => setServerList(serverList.filter(s => s.url !== server.url))}
+
+      <ServerList />
+
+      <SetServerModal
+        isCreate={true}
+        modalVisible={displayCreateNewServerModal}
+        hideModal={() => setDisplayCreateNewServerModal(false)}
+        showCloseButton
       />
+
+      <Button
+        onPress={() => setDisplayCreateNewServerModal(true)}
+        style={[styles.button, styles.addNewServerButton]}
+      >
+        <Text style={styles.buttonText}>
+          {t('ADD A NEW SERVER')}
+        </Text>
+      </Button>
     </View>
   )
 }

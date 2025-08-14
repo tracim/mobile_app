@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
   Linking,

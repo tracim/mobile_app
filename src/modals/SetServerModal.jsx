@@ -8,11 +8,16 @@ import {
 import { CustomModal } from './CustomModal.jsx'
 import { styles } from '../styles.js'
 import { modalStyles } from './modalStyles.js'
+import { useServerList } from '../ServerListContext.js'
+import { getB64Favicon } from '../util.js'
+import { removeCredentials } from '../authentificationHelper.js'
 
-export const CreateNewServerModal = (props) => {
+export const SetServerModal = (props) => {
   const { t } = useTranslation()
-  const [serverName, setServerName] = useState('')
-  const [serverURL, setServerURL] = useState('')
+  const [serverList, setServerList] = useServerList()
+
+  const [serverName, setServerName] = useState(props.isCreate ? '' : props.serverToUpdate.name)
+  const [serverURL, setServerURL] = useState(props.isCreate ? '' : props.serverToUpdate.url)
 
   return (
     <CustomModal
@@ -27,6 +32,7 @@ export const CreateNewServerModal = (props) => {
       <TextInput
         onChangeText={setServerName}
         placeholder={t('My Domain')}
+        defaultValue={props.isCreate ? undefined : props.serverToUpdate.name}
         placeholderTextColor={'#999'}
         style={[styles.input, styles.blackText]}
       />
@@ -38,6 +44,7 @@ export const CreateNewServerModal = (props) => {
         keyboardType='url'
         onChangeText={setServerURL}
         placeholder='https://mytracimdomain.org'
+        defaultValue={props.isCreate ? undefined : props.serverToUpdate.url}
         placeholderTextColor={'#999'}
         autoCapitalize='none'
         style={[styles.input, styles.blackText]}
@@ -48,7 +55,7 @@ export const CreateNewServerModal = (props) => {
           ? [styles.button, styles.buttonDisabled, modalStyles.callToActionButton]
           : [styles.button, modalStyles.callToActionButton]
         }
-        onPress={() => {
+        onPress={async () => {
           // INFO - M.P. - 2022-09-30 - Either that or to ask the complete full URL
           let serverURLWithTreatments = serverURL
           // INFO - M.P. - 2022-09-30 - Remove the https:// if it exists
@@ -64,16 +71,32 @@ export const CreateNewServerModal = (props) => {
             ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf('/') + 1)
             : serverURLWithTreatments
 
-          props.onPressAdd({ name: serverName, url: serverURLWithTreatments })
+          const faviconB64 = await getB64Favicon(serverURLWithTreatments)
+
+          const newServer = {
+            name: serverName,
+            url: serverURLWithTreatments,
+            iconB64: faviconB64 || ''
+          }
+
+          if (props.isCreate === true) {
+            setServerList([...serverList, newServer])
+          } else {
+            removeCredentials(props.serverToUpdate.url)
+            setServerList(serverList.map(
+              server => server.name === props.serverToUpdate.name ? newServer : server)
+            )
+          }
+
           props.hideModal()
         }}
         disabled={serverName === '' || serverURL === ''}
       >
         <Text style={[styles.buttonText, { alignSelf: 'center' }]}>
-          {t('Add server')}
+          {props.isCreate ? t('Add server') : t('Update server')}
         </Text>
       </Button>
     </CustomModal>
   )
 }
-export default CreateNewServerModal
+export default SetServerModal
