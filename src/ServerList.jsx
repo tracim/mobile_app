@@ -16,6 +16,7 @@ import { removeCredentials } from './authentificationHelper.js'
 import { styles } from './styles.js'
 import { useServerList } from './ServerListContext.js'
 import { SetServerModal } from './modals/SetServerModal.jsx'
+import { IS_SINGLE_SERVER } from './branding/Config.js'
 
 export const ServerList = (props) => {
   const navigation = useNavigation()
@@ -65,19 +66,21 @@ export const ServerList = (props) => {
                 </Text>
               </Button>
 
-              <Button
-                style={[styles.button, { marginEnd: 10 }]}
-                onPress={() => {
-                  setShowUpdateServerModal(true)
-                  setServerToUpdate(server)
-                }}
-              >
-                <Icon
-                  accessibilityLabel={t('Update {{serverName}}', { serverName: server.name })}
-                  icon={faPenToSquare}
-                  style={styles.buttonText}
-                />
-              </Button>
+              {!IS_SINGLE_SERVER && (
+                <Button
+                  style={[styles.button, { marginEnd: 10 }]}
+                  onPress={() => {
+                    setShowUpdateServerModal(true)
+                    setServerToUpdate(server)
+                  }}
+                >
+                  <Icon
+                    accessibilityLabel={t('Update {{serverName}}', { serverName: server.name })}
+                    icon={faPenToSquare}
+                    style={styles.buttonText}
+                  />
+                </Button>
+              )}
 
               <Button
                 style={styles.button}

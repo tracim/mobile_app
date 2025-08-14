@@ -64,10 +64,14 @@ export const UpdateCredentialsModal = (props) => {
           : [styles.button, modalStyles.callToActionButton]
         }
         onPress={async () => {
-          const user = await postLogin(props.currentServerURL, { username, password })
-          if (user) {
-            await storeCredentials(props.currentServerURL, username, password)
-            props.hideModal()
+          try {
+            const user = await postLogin(props.currentServerURL, {username, password})
+            if (user) {
+              await storeCredentials(props.currentServerURL, username, password)
+              props.hideModal()
+            }
+          } catch (e) {
+            console.error('Error in onPress of UpdateCredentialsModal', e)
           }
         }}
         disabled={username === '' || password === ''}

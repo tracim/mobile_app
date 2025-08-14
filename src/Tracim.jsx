@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   COLORS,
   IS_SINGLE_SERVER,
+  SERVER_B64_ICON,
   SERVER_NAME,
   SERVER_URL
 } from './branding/Config.js'
@@ -35,7 +36,11 @@ const Tracim = () => {
 
   useEffect(() => {
     if (IS_SINGLE_SERVER) {
-      setServerList([{ url: SERVER_URL, name: SERVER_NAME, iconB64: '' }])
+      setServerList([{
+        url: SERVER_URL,
+        name: SERVER_NAME,
+        iconB64: SERVER_B64_ICON
+      }])
     } else {
       getServerList()
     }
@@ -55,40 +60,42 @@ const Tracim = () => {
     setServerList(serverList)
   }
 
+  if (serverList.length === 0) {
+    return null
+  }
+
   return (
-    (!IS_SINGLE_SERVER || serverList.length > 0) && (
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName={IS_SINGLE_SERVER ? serverList[0].name : 'Home'}
-          screenOptions={{
-            drawerActiveTintColor: 'white',
-            drawerActiveBackgroundColor: COLORS.PRIMARY,
-            drawerPosition: 'right'
+    <NavigationContainer>
+      <Drawer.Navigator
+        initialRouteName={serverList.length === 1 ? serverList[0].name : 'Home'}
+        screenOptions={{
+          drawerActiveTintColor: 'white',
+          drawerActiveBackgroundColor: COLORS.PRIMARY,
+          drawerPosition: 'right'
+        }}
+      >
+        <Drawer.Screen
+          name={'Home'}
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+            swipeEnabled: !IS_SINGLE_SERVER
           }}
-        >
+        />
+
+        {serverList.map(server => (
           <Drawer.Screen
-            name={'Home'}
-            component={HomeScreen}
+            name={server.name}
+            component={ServerScreen}
+            initialParams={{ server: server }}
             options={{
               headerShown: false,
               swipeEnabled: !IS_SINGLE_SERVER
             }}
+            key={`drawer_${server.name}`}
           />
-
-          {serverList.map(server => (
-            <Drawer.Screen
-              name={server.name}
-              component={ServerScreen}
-              initialParams={{ server: server }}
-              options={{
-                headerShown: false,
-                swipeEnabled: !IS_SINGLE_SERVER
-              }}
-              key={`drawer_${server.name}`}
-            />
-          ))}
-        </Drawer.Navigator>
-      </NavigationContainer>
-    )
+        ))}
+      </Drawer.Navigator>
+    </NavigationContainer>
   )
 }

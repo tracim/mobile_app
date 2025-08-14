@@ -18,6 +18,7 @@ export const SetServerModal = (props) => {
 
   const [serverName, setServerName] = useState(props.isCreate ? '' : props.serverToUpdate.name)
   const [serverURL, setServerURL] = useState(props.isCreate ? '' : props.serverToUpdate.url)
+  const [errorMessage, setErrorMessage] = useState('')
 
   return (
     <CustomModal
@@ -50,6 +51,12 @@ export const SetServerModal = (props) => {
         style={[styles.input, styles.blackText]}
       />
 
+      {errorMessage !== '' && (
+        <Text style={[styles.errorMessage, { fontSize: 12 }]}>
+          {errorMessage}
+        </Text>
+      )}
+
       <Button
         style={serverName === '' || serverURL === ''
           ? [styles.button, styles.buttonDisabled, modalStyles.callToActionButton]
@@ -71,24 +78,29 @@ export const SetServerModal = (props) => {
             ? serverURLWithTreatments.substring(0, serverURLWithTreatments.lastIndexOf('/') + 1)
             : serverURLWithTreatments
 
-          const faviconB64 = await getB64Favicon(serverURLWithTreatments)
+          try {
+            const faviconB64 = await getB64Favicon(serverURLWithTreatments)
 
-          const newServer = {
-            name: serverName,
-            url: serverURLWithTreatments,
-            iconB64: faviconB64 || ''
+            const newServer = {
+              name: serverName,
+              url: serverURLWithTreatments,
+              iconB64: faviconB64 || ''
+            }
+
+            if (props.isCreate === true) {
+              setServerList([...serverList, newServer])
+            } else {
+              removeCredentials(props.serverToUpdate.url)
+              setServerList(serverList.map(
+                server => server.name === props.serverToUpdate.name ? newServer : server)
+              )
+            }
+
+            props.hideModal()
+          } catch (e) {
+            console.error('Error in onPress of SetServerModal', e)
+            setErrorMessage(t('Error, please check the server URL and try again.'))
           }
-
-          if (props.isCreate === true) {
-            setServerList([...serverList, newServer])
-          } else {
-            removeCredentials(props.serverToUpdate.url)
-            setServerList(serverList.map(
-              server => server.name === props.serverToUpdate.name ? newServer : server)
-            )
-          }
-
-          props.hideModal()
         }}
         disabled={serverName === '' || serverURL === ''}
       >
