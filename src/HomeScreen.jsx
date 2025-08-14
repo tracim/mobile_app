@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigation, useNavigationState } from '@react-navigation/native'
 import {
   StatusBar,
   View,
@@ -9,11 +10,20 @@ import { useTranslation } from 'react-i18next'
 import { styles } from './styles.js'
 import ServerList from './ServerList.jsx'
 import SetServerModal from './modals/SetServerModal.jsx'
-
+import { useServerList } from './ServerListContext.js'
 
 function HomeScreen (props) {
   const { t } = useTranslation()
+  const navigation = useNavigation()
+  const [serverList, setServerList] = useServerList()
+  const routes = useNavigationState(state => state.routes)
   const [displayCreateNewServerModal, setDisplayCreateNewServerModal] = useState(false)
+
+  useEffect(() => {
+    if (routes.length === 1 && serverList.length === 1) {
+      navigation.navigate(serverList[0].name, { server: serverList[0] })
+    }
+  }, [serverList])
 
   return (
     <View style={styles.pageContainer}>

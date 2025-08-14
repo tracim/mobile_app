@@ -52,7 +52,7 @@ export const ServerList = (props) => {
             >
               <Button
                 style={[styles.button, styles.serverButton]}
-                onPress={() => navigation.navigate(server.name)}
+                onPress={() => navigation.navigate(server.name, { server: server })}
                 onLongPress={() => {
                   removeCredentials(server.url)
                 }}

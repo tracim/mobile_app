@@ -60,14 +60,10 @@ const Tracim = () => {
     setServerList(serverList)
   }
 
-  if (serverList.length === 0) {
-    return null
-  }
-
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName={serverList.length === 1 ? serverList[0].name : 'Home'}
+        initialRouteName={'Home'}
         screenOptions={{
           drawerActiveTintColor: 'white',
           drawerActiveBackgroundColor: COLORS.PRIMARY,
@@ -87,7 +83,6 @@ const Tracim = () => {
           <Drawer.Screen
             name={server.name}
             component={ServerScreen}
-            initialParams={{ server: server }}
             options={{
               headerShown: false,
               swipeEnabled: !IS_SINGLE_SERVER
