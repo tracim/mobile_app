@@ -26,6 +26,7 @@ Tracim's mobile app uses [React Native CLI](https://reactnative.dev/docs/environ
 
 Requirements:
 - [Android Studio](https://developer.android.com/studio)
+  - Android Studio 2025+ is required
 - [Node](https://nodejs.org/en/download/package-manager/)
 - [Java Development Kit](http://openjdk.java.net/)
   - requires java 17

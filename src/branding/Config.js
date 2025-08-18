@@ -1,5 +1,5 @@
 export const COLORS = {
-  PRIMARY: '#2f7d30'
+  PRIMARY: '#0075e8'
 }
 
 export const IS_SINGLE_SERVER = false
