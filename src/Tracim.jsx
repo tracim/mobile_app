@@ -73,6 +73,7 @@ const Tracim = () => {
         <Drawer.Screen
           name={'Home'}
           component={HomeScreen}
+          initialParams={{ allowRedirect: true }}
           options={{
             headerShown: false,
             swipeEnabled: !IS_SINGLE_SERVER

@@ -18,7 +18,10 @@ export const UpdateCredentialsModal = (props) => {
 
   return (
     <CustomModal
-      hideModal={props.goBackToHomePage}
+      hideModal={() => {
+        props.hideModal()
+        props.goBackToHomePage()
+      }}
       modalVisible={props.modalVisible}
       showCloseButton={props.showCloseButton}
       title={t('Add credentials for {{currentServerName}}', {
@@ -69,6 +72,8 @@ export const UpdateCredentialsModal = (props) => {
             if (user) {
               await storeCredentials(props.currentServerURL, username, password)
               props.hideModal()
+            } else {
+              alert('Wrong credentials')
             }
           } catch (e) {
             console.error('Error in onPress of UpdateCredentialsModal', e)

@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native'
 import { COLORS } from './branding/Config.js'
 
 export const styles = StyleSheet.create({
+  bgColorPrimary: {
+    backgroundColor: COLORS.PRIMARY
+  },
+
   pageContainer: {
     flex: 1
   },
@@ -47,6 +51,7 @@ export const styles = StyleSheet.create({
   },
 
   serverButton: {
+    height: 42,
     marginEnd: 10,
     flex: 1,
     justifyContent: 'flex-start',
@@ -56,8 +61,8 @@ export const styles = StyleSheet.create({
 
   buttonServerIcon: {
     marginEnd: 10,
-    width: 28,
-    height: 28,
+    width: 42,
+    height: 42,
   },
 
   addNewServerButton: {

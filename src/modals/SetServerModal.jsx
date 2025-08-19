@@ -90,7 +90,10 @@ export const SetServerModal = (props) => {
             if (props.isCreate === true) {
               setServerList([...serverList, newServer])
             } else {
-              removeCredentials(props.serverToUpdate.url)
+              if (props.serverToUpdate.url !== serverURLWithTreatments) {
+                removeCredentials(props.serverToUpdate.url)
+              }
+
               setServerList(serverList.map(
                 server => server.name === props.serverToUpdate.name ? newServer : server)
               )

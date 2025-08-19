@@ -61,7 +61,7 @@ export const postLogin = async (serverURL, credentials) => {
     if (response.status === 200) {
       return await response.json()
     } else {
-      alert(i18n.t('Wrong credentials'))
+      return null
     }
   } catch (error) {
     alert(i18n.t('Something went wrong: ') + error.message)

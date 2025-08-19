@@ -16,6 +16,7 @@ import { removeCredentials } from './authentificationHelper.js'
 import { styles } from './styles.js'
 import { useServerList } from './ServerListContext.js'
 import { SetServerModal } from './modals/SetServerModal.jsx'
+import ConfirmModal from './modals/ConfirmModal.jsx'
 import { IS_SINGLE_SERVER } from './branding/Config.js'
 
 export const ServerList = (props) => {
@@ -23,7 +24,9 @@ export const ServerList = (props) => {
   const { t } = useTranslation()
   const [serverList, setServerList] = useServerList()
   const [showUpdateServerModal, setShowUpdateServerModal] = useState(false)
-  const [serverToUpdate, setServerToUpdate] = useState(null)
+  const [serverToUpdate, setServerToUpdate] = useState({ name: '', url: '', iconB64: '' })
+  const [showRemoveServerConfirmModal, setShowRemoveServerConfirmModal] = useState(false)
+  const [serverToRemove, setServerToRemove] = useState({ name: '', url: '', iconB64: '' })
 
   return (
     <SafeAreaView style={styles.pageContainer}>
@@ -36,6 +39,15 @@ export const ServerList = (props) => {
           showCloseButton
         />
       )}
+
+      <ConfirmModal
+        isVisible={showRemoveServerConfirmModal}
+        onConfirm={() => {
+          removeCredentials(serverToRemove.url)
+          setServerList(serverList.filter(s => s.url !== serverToRemove.url))
+        }}
+        onClose={() => setShowRemoveServerConfirmModal(false)}
+      />
 
       <Image
         source={require('./branding/logo.png')}
@@ -50,6 +62,11 @@ export const ServerList = (props) => {
               style={styles.serverMenuItem}
               key={`button_${server.name}`}
             >
+              <Image
+                style={styles.buttonServerIcon}
+                source={{ uri: server.iconB64 }}
+              />
+
               <Button
                 style={[styles.button, styles.serverButton]}
                 onPress={() => navigation.navigate(server.name, { server: server })}
@@ -57,10 +74,6 @@ export const ServerList = (props) => {
                   removeCredentials(server.url)
                 }}
               >
-                <Image
-                  style={styles.buttonServerIcon}
-                  source={{ uri: server.iconB64 }}
-                />
                 <Text style={[styles.buttonText]}>
                   {server.name}
                 </Text>
@@ -85,8 +98,8 @@ export const ServerList = (props) => {
               <Button
                 style={styles.button}
                 onPress={() => {
-                  removeCredentials(server.url)
-                  setServerList(serverList.filter(s => s.url !== server.url))
+                  setServerToRemove(server)
+                  setShowRemoveServerConfirmModal(true)
                 }}
               >
                 <Icon

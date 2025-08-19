@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import { useNavigation } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import { IS_SINGLE_SERVER } from './branding/Config.js'
 import {
   postLogin,
@@ -26,6 +27,8 @@ export const ServerScreen = (props) => {
   const navigation = useNavigation()
   const server = props.route.params.server
 
+  const isFocused = useIsFocused()
+
   const [displayUpdateCredentialsModal, setDisplayUpdateCredentialsModal] = useState(false)
   const [displayAcceptTermsOfUseModal, setDisplayAcceptTermsOfUseModal] = useState(false)
   const [displayServer, setDisplayServer] = useState(false)
@@ -37,17 +40,29 @@ export const ServerScreen = (props) => {
   const tryLogin = async () => {
     if (user) return
     const credentials = await getCredentials(server.url)
+
     if (!credentials) {
       setDisplayUpdateCredentialsModal(true)
     } else {
       const user = await postLogin(server.url, credentials)
+      if (user === null) {
+        setDisplayUpdateCredentialsModal(true)
+        return
+      }
       setUser(user)
       setDisplayUpdateCredentialsModal(false)
     }
   }
+
   useEffect(() => {
     tryLogin()
-  })
+  }, [])
+
+  useEffect(() => {
+    if (isFocused) {
+      tryLogin()
+    }
+  }, [isFocused, displayUpdateCredentialsModal])
 
   const fetchTermsOfUse = async () => {
     if (termsOfUse || !user) return
@@ -79,7 +94,7 @@ export const ServerScreen = (props) => {
     const areTermsOfUseAccepted = userConfig.parameters.usage_conditions__status === 'accepted'
     setDisplayAcceptTermsOfUseModal(termsOfUse && !areTermsOfUseAccepted)
     setDisplayServer(!displayUpdateCredentialsModal && (!termsOfUse || areTermsOfUseAccepted))
-  }, [user, userConfig])
+  }, [user, userConfig, displayUpdateCredentialsModal])
 
   return (
     <SafeAreaView style={styles.pageContainer}>
@@ -94,7 +109,7 @@ export const ServerScreen = (props) => {
       <UpdateCredentialsModal
         currentServerURL={server.url}
         currentServerName={server.name}
-        goBackToHomePage={() => navigation.navigate('Home')}
+        goBackToHomePage={() => navigation.navigate('Home', { allowRedirect: false })}
         hideModal={() => setDisplayUpdateCredentialsModal(false)}
         modalVisible={displayUpdateCredentialsModal}
         showCloseButton={!IS_SINGLE_SERVER}
