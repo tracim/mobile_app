@@ -17,22 +17,20 @@
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
-		<string>1.1</string>
+		<string>$(MARKETING_VERSION)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleVersion</key>
-		<string>1</string>
+		<string>$(CURRENT_PROJECT_VERSION)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>NSAppTransportSecurity</key>
 		<dict>
-			<key>NSAllowsArbitraryLoads</key>
-			<false/>
-			<key>NSExceptionDomains</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
+            <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
+            <key>NSAllowsArbitraryLoads</key>
+            <false/>
+            <key>NSAllowsLocalNetworking</key>
+            <true/>
 		</dict>
 		<key>NSCameraUsageDescription</key>
 		<string>Camera access is required to be able to take, upload and store pictures and videos on Tracim's cloud</string>
@@ -44,7 +42,7 @@
 		<string>LaunchScreen.storyboard</string>
 		<key>UIRequiredDeviceCapabilities</key>
 		<array>
-			<string>armv7</string>
+			<string>arm64</string>
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>

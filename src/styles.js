@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native'
 import { COLORS } from './branding/Config.js'
 
 export const styles = StyleSheet.create({
+  bgColorPrimary: {
+    backgroundColor: COLORS.PRIMARY
+  },
+
   pageContainer: {
     flex: 1
   },
@@ -9,7 +13,6 @@ export const styles = StyleSheet.create({
   logo: {
     marginTop: 20,
     height: 60,
-    width: 200,
     alignSelf: 'center'
   },
 
@@ -19,7 +22,6 @@ export const styles = StyleSheet.create({
     elevation: 2,
     backgroundColor: 'grey',
     justifyContent: 'center',
-    height: 48,
     minWidth: 48,
     alignItems: 'center'
   },
@@ -46,10 +48,19 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  serverMenuButton: {
-    marginEnd: 20,
+  serverButton: {
+    height: 42,
+    marginEnd: 10,
     flex: 1,
-    alignItems: 'flex-start'
+    justifyContent: 'flex-start',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
+  buttonServerIcon: {
+    marginEnd: 10,
+    width: 42,
+    height: 42,
   },
 
   addNewServerButton: {

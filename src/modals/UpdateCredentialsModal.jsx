@@ -18,7 +18,10 @@ export const UpdateCredentialsModal = (props) => {
 
   return (
     <CustomModal
-      hideModal={props.goBackToHomePage}
+      hideModal={() => {
+        props.hideModal()
+        props.goBackToHomePage()
+      }}
       modalVisible={props.modalVisible}
       showCloseButton={props.showCloseButton}
       title={t('Add credentials for {{currentServerName}}', {
@@ -44,6 +47,7 @@ export const UpdateCredentialsModal = (props) => {
         onChangeText={setPassword}
         placeholder='********'
         secureTextEntry
+        autoCapitalize={'none'}
       />
 
       <Link
@@ -63,10 +67,16 @@ export const UpdateCredentialsModal = (props) => {
           : [styles.button, modalStyles.callToActionButton]
         }
         onPress={async () => {
-          const user = await postLogin(props.currentServerURL, { username, password })
-          if (user) {
-            await storeCredentials(props.currentServerURL, username, password)
-            props.hideModal()
+          try {
+            const user = await postLogin(props.currentServerURL, {username, password})
+            if (user) {
+              await storeCredentials(props.currentServerURL, username, password)
+              props.hideModal()
+            } else {
+              alert('Wrong credentials')
+            }
+          } catch (e) {
+            console.error('Error in onPress of UpdateCredentialsModal', e)
           }
         }}
         disabled={username === '' || password === ''}
