@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
   logo: {
     marginTop: 20,
     height: 60,
-    width: 200,
     alignSelf: 'center'
   },
 
@@ -23,7 +22,6 @@ export const styles = StyleSheet.create({
     elevation: 2,
     backgroundColor: 'grey',
     justifyContent: 'center',
-    // height: 48,
     minWidth: 48,
     alignItems: 'center'
   },
