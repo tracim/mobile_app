@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { COLORS } from './branding/Config.js'
+import { COLORS } from '../assets/branding/Config.js'
 
 export const styles = StyleSheet.create({
   bgColorPrimary: {

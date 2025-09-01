@@ -1,7 +1,7 @@
 
 export async function getB64Favicon(serverURL) {
   const response = await fetch(
-    `https://${serverURL}/assets/branding/images/favicon/tracim-64x64.png`,
+    `https://${serverURL}/assets/branding/images/favicon/apple-touch-icon.png`,
     {method: 'GET'}
   )
 

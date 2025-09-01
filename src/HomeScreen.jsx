@@ -21,7 +21,6 @@ function HomeScreen (props) {
 
   useEffect(() => {
     const allowRedirectToServer = props.route.params?.allowRedirect === true
-    console.log('allowRedirectToServer', allowRedirectToServer, props.route.params?.allowRedirect)
 
     if (allowRedirectToServer && routes.length === 1 && serverList.length === 1) {
       navigation.navigate(serverList[0].name, { server: serverList[0] })

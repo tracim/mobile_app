@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
 
     factory.startReactNative(
-      withModuleName: "mobile_app",
+      withModuleName: "tracim_mobile_app",
       in: window,
       launchOptions: launchOptions
     )

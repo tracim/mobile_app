@@ -76,3 +76,5 @@ yarn-error.log
 
 #
 android/app/src/main/assets/index.android.bundle
+ios/assets/
+

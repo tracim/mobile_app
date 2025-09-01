@@ -8,7 +8,8 @@
 // INFO - CH - 2025-08-12 - Unused demo RN app
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+// import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StyleSheet, View, Text, useColorScheme } from 'react-native';
 
 function App() {
     const isDarkMode = useColorScheme() === 'dark';

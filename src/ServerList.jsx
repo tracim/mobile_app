@@ -17,7 +17,7 @@ import { styles } from './styles.js'
 import { useServerList } from './ServerListContext.js'
 import { SetServerModal } from './modals/SetServerModal.jsx'
 import ConfirmModal from './modals/ConfirmModal.jsx'
-import { IS_SINGLE_SERVER } from './branding/Config.js'
+import { IS_SINGLE_SERVER } from '../assets/branding/Config.js'
 
 export const ServerList = (props) => {
   const navigation = useNavigation()
@@ -50,7 +50,7 @@ export const ServerList = (props) => {
       />
 
       <Image
-        source={require('./branding/logo.png')}
+        source={require('../assets/branding/logo.png')}
         resizeMode='contain'
         style={styles.logo}
       />

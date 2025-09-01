@@ -9,7 +9,7 @@ import {
   SERVER_B64_ICON,
   SERVER_NAME,
   SERVER_URL
-} from './branding/Config.js'
+} from '../assets/branding/Config.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   ServerListProvider,
