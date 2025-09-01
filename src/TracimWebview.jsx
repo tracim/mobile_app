@@ -92,6 +92,7 @@ export const TracimWebview = (props) => {
         sharedCookiesEnabled
         onScroll={handleScroll}
         ref={webViewRef}
+        originWhitelist={['*']}
         source={{ uri: httpsUrl }}
         startInLoadingState
         renderLoading={() => (

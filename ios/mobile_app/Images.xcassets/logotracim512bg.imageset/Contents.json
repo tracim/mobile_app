@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "splash_screen.png",
+      "filename" : "LOGO_TRACIM_FULL_512_white_bg-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "splash_screen@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "splash_screen@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,4 +1,4 @@
-<img src="./src/branding/logo.png" alt="Tracim's logo" width="250">
+<img src="./assets/branding/logo.png" alt="Tracim's logo" width="250">
 <br /><br /><br />
 
 

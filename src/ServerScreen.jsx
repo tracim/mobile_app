@@ -10,7 +10,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-native-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons/faServer'
 import { useNavigation } from '@react-navigation/native'
 import { useIsFocused } from '@react-navigation/native'
-import { IS_SINGLE_SERVER } from './branding/Config.js'
+import { IS_SINGLE_SERVER } from '../assets/branding/Config.js'
 import {
   postLogin,
   getUsageConditions,
@@ -22,6 +22,7 @@ import { styles } from './styles.js'
 import TracimWebView from './TracimWebview.jsx'
 import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
 import AcceptTermsOfUseModal from './modals/AcceptTermsOfUseModal.jsx'
+
 
 export const ServerScreen = (props) => {
   const navigation = useNavigation()
@@ -100,7 +101,7 @@ export const ServerScreen = (props) => {
     <SafeAreaView style={styles.pageContainer}>
       {!displayServer && (
         <Image
-          source={require('./branding/logo.png')}
+          source={require('../assets/branding/logo.png')}
           resizeMode='contain'
           style={styles.logo}
         />
