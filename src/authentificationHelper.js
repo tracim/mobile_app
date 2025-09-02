@@ -37,6 +37,7 @@ export const storeCredentials = async (serverURL, username, password) => {
 export const removeCredentials = async (serverURL) => {
   const serverCredentialDictAsJSON = await AsyncStorage.getItem('credentials')
   const serverCredentialDict = JSON.parse(serverCredentialDictAsJSON)
+  const rez = await fetch(`https://${serverURL}/api/auth/logout`, { method: 'POST' })
   delete serverCredentialDict[serverURL]
   await AsyncStorage.setItem('credentials', JSON.stringify(serverCredentialDict))
 }

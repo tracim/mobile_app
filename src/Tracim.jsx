@@ -82,13 +82,14 @@ const Tracim = () => {
 
         {serverList.map(server => (
           <Drawer.Screen
-            name={server.name}
+            name={server.url}
             component={ServerScreen}
             options={{
+              drawerLabel: server.name,
               headerShown: false,
               swipeEnabled: !IS_SINGLE_SERVER
             }}
-            key={`drawer_${server.name}`}
+            key={`drawer_${server.url}`}
           />
         ))}
       </Drawer.Navigator>

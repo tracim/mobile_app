@@ -25,7 +25,7 @@ export const SetServerModal = (props) => {
       modalVisible={props.modalVisible}
       hideModal={props.hideModal}
       showCloseButton={props.showCloseButton}
-      title={t('Add a new server')}
+      title={props.isCreate ? t('Add a new server') : t('Update server')}
     >
       <Text style={styles.label} accessibilityElementsHidden importantForAccessibility='no-hide-descendants'>
         {t('Server name')}

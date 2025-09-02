@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from '@react-navigation/native'
+// import { Link, useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
   Text,
@@ -15,6 +15,7 @@ export const UpdateCredentialsModal = (props) => {
   const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // const navigation = useNavigation()
 
   return (
     <CustomModal
@@ -50,16 +51,19 @@ export const UpdateCredentialsModal = (props) => {
         autoCapitalize={'none'}
       />
 
+      {/*
+      // INFO - CH - 2025-09-01 - Button hidden until fixed
+      // See https://github.com/tracim/mobile_app/issues/19
       <Link
-        to={{
-          screen: props.currentServerName,
-          params: { screenId: 'forgot-password' }
-        }}
+        screen={props.currentServerName}
+        params={{ screenId: 'forgot-password' }}
+        // action={props.hideModal}
         onPress={props.hideModal}
         style={styles.link}
       >
         {t('Forgot password')}
       </Link>
+      */}
 
       <Button
         style={username === '' || password === ''
