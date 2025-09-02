@@ -23,7 +23,7 @@ function HomeScreen (props) {
     const allowRedirectToServer = props.route.params?.allowRedirect === true
 
     if (allowRedirectToServer && routes.length === 1 && serverList.length === 1) {
-      navigation.navigate(serverList[0].name, { server: serverList[0] })
+      navigation.navigate(serverList[0].url)
     }
   }, [serverList])
 

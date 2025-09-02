@@ -18,6 +18,7 @@ import {
   getUserConfig,
   putUserConfig
 } from './authentificationHelper.js'
+import { useServerList } from './ServerListContext.js'
 import { styles } from './styles.js'
 import TracimWebView from './TracimWebview.jsx'
 import UpdateCredentialsModal from './modals/UpdateCredentialsModal.jsx'
@@ -26,7 +27,9 @@ import AcceptTermsOfUseModal from './modals/AcceptTermsOfUseModal.jsx'
 
 export const ServerScreen = (props) => {
   const navigation = useNavigation()
-  const server = props.route.params.server
+
+  const [serverList, setServerList] = useServerList()
+  const server = serverList.find(s => s.url === props.route.name)
 
   const isFocused = useIsFocused()
 
@@ -130,7 +133,7 @@ export const ServerScreen = (props) => {
 
           <TracimWebView
             onClickGoBack={() => navigation.goBack()}
-            screenId={props.route.params.screenId}
+            screenId={props.route?.params?.screenId}
             url={server.url}
           />
 
