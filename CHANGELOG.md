@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2 - 2026-04-30
+
+- Fix app overlay when 3 button navigation is activated.
+
 ## 2.1 - 2025-09-02
 
 - Change screen identifier from name to url
