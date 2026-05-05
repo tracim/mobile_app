@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
 // import { useTranslation } from 'react-i18next'
@@ -61,38 +62,40 @@ const Tracim = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName={'Home'}
-        screenOptions={{
-          drawerActiveTintColor: 'white',
-          drawerActiveBackgroundColor: COLORS.PRIMARY,
-          drawerPosition: 'right'
-        }}
-      >
-        <Drawer.Screen
-          name={'Home'}
-          component={HomeScreen}
-          initialParams={{ allowRedirect: true }}
-          options={{
-            headerShown: false,
-            swipeEnabled: !IS_SINGLE_SERVER
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName={'Home'}
+          screenOptions={{
+            drawerActiveTintColor: 'white',
+            drawerActiveBackgroundColor: COLORS.PRIMARY,
+            drawerPosition: 'right'
           }}
-        />
-
-        {serverList.map(server => (
+        >
           <Drawer.Screen
-            name={server.url}
-            component={ServerScreen}
+            name={'Home'}
+            component={HomeScreen}
+            initialParams={{ allowRedirect: true }}
             options={{
-              drawerLabel: server.name,
               headerShown: false,
               swipeEnabled: !IS_SINGLE_SERVER
             }}
-            key={`drawer_${server.url}`}
           />
-        ))}
-      </Drawer.Navigator>
-    </NavigationContainer>
+
+          {serverList.map(server => (
+            <Drawer.Screen
+              name={server.url}
+              component={ServerScreen}
+              options={{
+                drawerLabel: server.name,
+                headerShown: false,
+                swipeEnabled: !IS_SINGLE_SERVER
+              }}
+              key={`drawer_${server.url}`}
+            />
+          ))}
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   )
 }

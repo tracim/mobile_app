@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity as Button
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 import { styles } from './styles.js'
 import ServerList from './ServerList.jsx'
@@ -28,7 +29,7 @@ function HomeScreen (props) {
   }, [serverList])
 
   return (
-    <View style={styles.pageContainer}>
+    <SafeAreaView style={styles.pageContainer}>
       <StatusBar barStyle='default' />
 
       <ServerList />
@@ -48,7 +49,7 @@ function HomeScreen (props) {
           {t('ADD A NEW SERVER')}
         </Text>
       </Button>
-    </View>
+    </SafeAreaView>
   )
 }
 export default HomeScreen
