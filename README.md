@@ -37,6 +37,13 @@ Install dependencies:
 npm install
 ```
 
+Notes from Damien: I also added the following lines to `~/.bashrc`:
+
+```
+export ANDROID_HOME=/home/damien/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+```
+
 ### iOS development
 
 Requirements:
